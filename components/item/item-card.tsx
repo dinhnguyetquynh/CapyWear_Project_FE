@@ -1,27 +1,44 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ItemRes } from "@/types/item";
 
-export default function ItemCard({ item }: { item: ItemRes}) { 
+export default function ItemCard({ item }: { item: ItemRes }) {
   return (
-    <div className="group border rounded-xl overflow-hidden bg-white hover:shadow-xl transition-all duration-300">
-      <Link href={''}>
-        <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
-          <Image
-            src={'https://bizweb.dktcdn.net/100/575/016/products/mc10224920ec9534129a4b3d79b600.jpg?v=1773136916927'} // Lấy ảnh đầu tiên làm ảnh đại diện
-            alt={item.name}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          />
+    // 1. Container: Bo góc (rounded-2xl), Viền nhẹ (border), Đổ bóng khi hover (hover:shadow-lg)
+    <div className="group relative flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+      
+      {/* 2. Image Section: Dùng aspect-[3/4] cực chuẩn cho ảnh người mẫu */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-50">
+        <Image
+          src={'https://bizweb.dktcdn.net/100/575/016/products/mc10224920ec9534129a4b3d79b600.jpg?v=1773136916927'} // Fallback nếu chưa có ảnh
+          alt={item.name}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+  
+        <span className="absolute top-3 left-3 bg-black text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest">
+          New
+        </span>
+      </div>
+
+      {/* 3. Info Section: Padding vừa phải, Text tinh tế */}
+      <div className="p-5 flex flex-col flex-1">
+        <h3 className="text-sm font-semibold text-gray-800 uppercase tracking-tight truncate">
+          {item.name}
+        </h3>
+        
+        <div className="mt-2 flex items-center justify-between">
+          <p className="text-lg font-black text-black">
+            {item.price.toLocaleString("vi-VN")} ₫
+          </p>
+          <span className="text-[11px] text-gray-400 font-medium">
+            Kho: {item.inventoryQty}
+          </span>
         </div>
-      </Link>
-      <div className="p-4 text-center">
-        <p className="text-xs text-gray-400 uppercase tracking-widest mb-1">{item.inventoryQty}</p>
-        <h3 className="font-medium text-gray-900 truncate">{item.name}</h3>
-        <p className="text-red-500 font-bold mt-2">
-          {item.price.toLocaleString("vi-VN")} ₫
-        </p>
+
+        {/* 4. Custom Button: Tự code hiệu ứng hover mượt mà */}
+        <button className="mt-5 w-full bg-black text-white py-3 text-xs font-bold uppercase tracking-widest transition-colors hover:bg-zinc-800 active:scale-95">
+          Thêm vào giỏ hàng
+        </button>
       </div>
     </div>
   );
