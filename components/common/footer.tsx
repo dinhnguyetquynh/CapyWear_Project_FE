@@ -20,7 +20,6 @@ export default function Footer() {
         <div>
           <h4 className="font-bold mb-4">Kết nối</h4>
           <div className="flex gap-4 text-xl">
-            {/* Thêm các icon Facebook, Instagram ở đây */}
             <span>FB</span> <span>IG</span> <span>TT</span>
           </div>
         </div>
