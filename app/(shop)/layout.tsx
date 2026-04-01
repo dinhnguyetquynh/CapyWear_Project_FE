@@ -13,13 +13,12 @@ export default function ShopLayout({
       <Header />
       <div className="flex flex-1 container mx-auto px-4 py-8 gap-8">
         <aside className="hidden md:block w-64 shrink-0">
-          <Sidebar />
+          <Sidebar/>
         </aside>
         <main className="flex-1">
           {children}
         </main>
       </div>
-
       <Footer />
     </div>
   );

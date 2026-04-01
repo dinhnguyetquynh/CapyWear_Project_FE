@@ -1,9 +1,14 @@
 import Image from "next/image";
 import { ItemRes } from "@/types/item";
+import Link from "next/link";
 
 export default function ItemCard({ item }: { item: ItemRes }) {
   return (
-    <div className="group relative flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+    <Link 
+      href={`/item-details/${item.id}`}
+      className="group border p-4 rounded-lg hover:shadow-lg transition-all bg-white"
+    >
+      <div className="group relative flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-50">
         <Image
           src={'https://bizweb.dktcdn.net/100/575/016/products/mc10224920ec9534129a4b3d79b600.jpg?v=1773136916927'} 
@@ -30,10 +35,9 @@ export default function ItemCard({ item }: { item: ItemRes }) {
             Kho: {item.inventoryQty}
           </span>
         </div>
-        <button className="mt-5 w-full bg-black text-white py-3 text-xs font-bold uppercase tracking-widest transition-colors hover:bg-zinc-800 active:scale-95">
-          Thêm vào giỏ hàng
-        </button>
       </div>
     </div>
+    </Link>
+    
   );
 }
