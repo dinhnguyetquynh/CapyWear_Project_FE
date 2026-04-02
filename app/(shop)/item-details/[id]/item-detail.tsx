@@ -1,5 +1,7 @@
 'use client';
+import { addToCartAction } from "@/actions/cart";
 import { ItemRes } from "@/types/item";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useReducer, useState } from "react";
@@ -7,10 +9,12 @@ import { toast } from "sonner";
 interface Props {
   item: ItemRes;
 }
-export default function ItemDetail({item}:Props){
+export default  function ItemDetail({item}:Props){
     const [count,setCount] = useState(1);
     const router = useRouter();
-    const isLoggedIn = false;
+    const {data} = useSession();
+    const { accessToken } = data || {}; 
+    const isLoggedIn = !!data; 
 
     const handleIncrement =()=>{
         setCount(prev=>prev+1);
@@ -20,7 +24,7 @@ export default function ItemDetail({item}:Props){
             setCount(prev=>prev-1)
         }
     }
-    const protectedAction = (actionType: 'add' | 'buy') => {
+    const protectedAction = async (actionType: 'add' | 'buy') => {
     if (!isLoggedIn) {
       toast.error("Bạn chưa đăng nhập",{
         description: "Vui lòng đăng nhập để thực hiện chức năng này.",
@@ -34,6 +38,13 @@ export default function ItemDetail({item}:Props){
 
     if (actionType === 'add') {
       console.log("Thêm vào giỏ hàng:", count, item.name);
+      console.log("ACCCESTOKEN:",accessToken);
+      const res = await addToCartAction({ itemId: item.id, quantity: count }, accessToken);
+      if(res.code==200){
+        toast.success("Thành công",{description:res.message});
+      }else {
+        toast.error("Thất bại", { description: res.message });
+      }
     } else {
       console.log("Chuyển đến trang thanh toán với item:", item.name);
     }
