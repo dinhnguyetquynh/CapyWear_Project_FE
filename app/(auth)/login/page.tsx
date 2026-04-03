@@ -48,6 +48,18 @@ export default function LoginPage(){
             >
                 Đăng nhập
             </button>
+                    <div className="relative flex py-2 items-center">
+                        <div className="flex-grow border-t border-gray-300"></div>
+                        <span className="flex-shrink mx-4 text-gray-400 text-sm">Hoặc</span>
+                        <div className="flex-grow border-t border-gray-300"></div>
+                    </div>
+                    <button
+                        onClick={() => signIn("google", { callbackUrl: "/" })}
+                        className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 rounded-xl font-bold py-2 hover:bg-gray-50 transition-all"
+                    >
+                        <img src="https://authjs.dev/img/providers/google.svg" alt="Google" className="w-5 h-5" />
+                        Đăng nhập bằng Google
+                    </button>
             </div>
             </div>
         </div>

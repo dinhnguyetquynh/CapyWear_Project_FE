@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 // Hàm xử lý việc gọi API Refresh Token
 async function refreshAccessToken(token: JWT): Promise<JWT>{
@@ -10,8 +11,6 @@ async function refreshAccessToken(token: JWT): Promise<JWT>{
     if (!baseUrl) {
       throw new Error("BACKEND_API_URL environment variable is not set");
     }
-
-    // Sửa lại đường dẫn API cho đúng với endpoint refresh
     const response = await fetch(`${baseUrl}/api/public/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -39,6 +38,10 @@ async function refreshAccessToken(token: JWT): Promise<JWT>{
 
 export const authOptions: NextAuthOptions = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       name: "Backend Server",
       credentials: {
@@ -72,33 +75,48 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }):Promise<JWT>{
-      // 1. Nếu là lần đầu đăng nhập
-      if (user && user.accessToken) {
-        const decodedToken = jwtDecode<any>(user.accessToken);
-        const expiresInMilliseconds = user.expiresIn * 1000;
-        return {
-          ...token,
-          accessToken: user.accessToken,
-          refreshToken: user.refreshToken,
-          accessTokenExpires: Date.now() + expiresInMilliseconds, 
-          permissions: decodedToken.authorities || decodedToken.permissions || [],
-        };
+    async jwt({ token, user, account }): Promise<JWT> {
+      if (account && user) {
+        let backendResponse;
+
+        if (account.provider === "google") {
+          const res = await fetch(`${process.env.BACKEND_API_URL}/api/public/social-login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idToken: account.id_token }), // Gửi idToken cho Backend verify
+          });
+          backendResponse = await res.json();
+        } 
+       
+        else if (account.provider === "credentials") {
+          backendResponse = user; 
+        }
+
+       
+        if (backendResponse && backendResponse.accessToken) {
+          const decoded: any = jwtDecode(backendResponse.accessToken);
+          return {
+            ...token,
+            accessToken: backendResponse.accessToken,
+            refreshToken: backendResponse.refreshToken,
+            accessTokenExpires: Date.now() + backendResponse.expiresIn * 1000,
+          };
+        }
       }
-      
-      // 2. Nếu token chưa hết hạn, trả về token hiện tại
-      if (token.accessTokenExpires && Date.now() < token.accessTokenExpires) {
-      return token;
-    }
+
+     
+      if (token.accessTokenExpires && Date.now() < (token.accessTokenExpires as number)) {
+        return token;
+      }
 
       return refreshAccessToken(token);
     },
+
     async session({ session, token }) {
-    session.accessToken = token.accessToken ||'';
-    session.refreshToken = token.refreshToken ||'';
-    session.error = token.error; 
-    session.permissions = token.permissions as string[];
-    return session;
+      session.accessToken = token.accessToken as string;
+      session.refreshToken = token.refreshToken as string;
+      session.error = token.error;
+      return session;
     },
   },
   pages: {
