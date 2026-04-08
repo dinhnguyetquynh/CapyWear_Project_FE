@@ -39,3 +39,64 @@ export async function addToCartAction(req: CartDetailReq, token?: string): Promi
     };
   }
 }
+
+export async function getCartList(token?:string): Promise<ApiRes<any>> {
+  const backendUrl = process.env.BACKEND_API_URL;
+  try{
+    const response = await fetch(`${backendUrl}/api/cart/detail`,{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+    const data : ApiRes<any> = await response.json();
+    if(!response.ok){
+       return {
+        code: data.code || response.status,
+        message: data.message || "Lấy danh sách sản phẩm trong giỏ hàng thất bại",
+        result: null
+      };
+    }
+    return data;
+
+  }catch (error) {
+    console.error("Cart Action Error:", error);
+    return {
+      code: 500,
+      message: "Không thể kết nối đến máy chủ",
+      result: null
+    };
+  }
+}
+export async function deleteCartItemAction(cartDetailId: number, token?: string): Promise<ApiRes<any>> {
+  const backendUrl = process.env.BACKEND_API_URL;
+
+  try {
+    const response = await fetch(`${backendUrl}/api/cart/${cartDetailId}`, {
+      method: 'DELETE', 
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    const data: ApiRes<any> = await response.json();
+
+    if (!response.ok) {
+      return {
+        code: data.code || response.status,
+        message: data.message || "Xóa sản phẩm thất bại",
+        result: null
+      };
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Delete Cart Action Error:", error);
+    return {
+      code: 500,
+      message: "Không thể kết nối đến máy chủ",
+      result: null
+    };
+  }
+}

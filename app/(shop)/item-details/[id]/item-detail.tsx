@@ -54,7 +54,7 @@ export default  function ItemDetail({item}:Props){
         <div className="flex flex-col md:flex-row gap-12">
             <div>
                 <Image 
-                    src={'https://bizweb.dktcdn.net/100/575/016/products/mc10224920ec9534129a4b3d79b600.jpg?v=1773136916927'}
+                    src={item.urlImg}
                     alt=""
                     width={600}
                     height={800}

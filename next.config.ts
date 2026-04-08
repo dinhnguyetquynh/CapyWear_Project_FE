@@ -8,7 +8,13 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'bizweb.dktcdn.net',
         port: '',
-        pathname: '/**', // Cho phép tất cả các đường dẫn từ domain này
+        pathname: '/**', 
+      },
+      {
+        protocol: 'https',
+        hostname: 'content.pancake.vn',
+        port: '',
+        pathname: '/**', 
       },
     ],
   },

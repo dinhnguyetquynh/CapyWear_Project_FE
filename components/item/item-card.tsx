@@ -11,7 +11,7 @@ export default function ItemCard({ item }: { item: ItemRes }) {
       <div className="group relative flex flex-col bg-white border border-gray-100 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-50">
         <Image
-          src={'https://bizweb.dktcdn.net/100/575/016/products/mc10224920ec9534129a4b3d79b600.jpg?v=1773136916927'} 
+          src={item.urlImg} 
           alt={item.name}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"
