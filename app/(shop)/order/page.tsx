@@ -3,11 +3,20 @@ import { CartDetailRes } from "@/components/cart/cart-detail";
 import OrderItem from "@/components/order/order-item";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { createOrder, OrderRequest } from "@/service/order.service";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 
 export default function OrderBill(){
     const [items, setItems] = useState<CartDetailRes[]>([]);
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const session = useSession();
+    const accessToken = session.data?.accessToken;
     useEffect(() => {
         const savedItems = localStorage.getItem('checkoutItems');
         if (savedItems) {
@@ -15,6 +24,40 @@ export default function OrderBill(){
         }
     }, []);
     const totalBill = items.reduce((sum, item) => sum + (item.purchasePrice * item.quantity), 0);
+
+    const handleCreateOrder = async()=>{
+      if(items.length==0) return;
+      if (!accessToken) {
+            toast.error("Chưa đăng nhập", {
+                description: "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+            });
+            return;
+        }
+      try{
+        setLoading(true);
+        
+        const orderRequest : OrderRequest ={
+          items: items.map(item => ({
+                    itemId: item.itemRes.id, // Lấy ID của sản phẩm
+                    quantity: item.quantity
+          }))
+        };
+        
+        const result = await createOrder(orderRequest,accessToken);
+        toast.success("Thanh toán thành công!", {
+                // description: `Mã đơn hàng của bạn: ${result.orderId}`,
+            });
+        localStorage.removeItem('checkoutItems');
+        router.push('/');
+      }catch (error) {
+            toast.error("Tạo đơn hàng thất bại", {
+                description: "Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại.",
+            });
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
     return(
     <div>
         <div className="max-w-full mx-auto p-4 bg-white rounded-xl shadow-sm">
@@ -88,6 +131,13 @@ export default function OrderBill(){
                 Hệ thống sẽ tự động xác nhận sau khi nhận được tiền.
               </p>
             </DialogFooter>
+            <Button
+              onClick={handleCreateOrder}
+              disabled={loading}
+              className="w-full bg-green-600 hover:bg-green-700"
+            >
+                {loading?"Đang xử lý":"Hoàn thành"}
+            </Button>
           </DialogContent>
         </Dialog>
       </div>
