@@ -1,27 +1,29 @@
-//hook
-import { useState, useEffect } from "react";
+
+import { getItems } from "@/service/item.service";
+import { ItemRes } from "@/types/item";
+
 import { useSession } from "next-auth/react";
-import { getOrderHistory, OrderRespone } from "@/service/order.service";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export const useOrderHistory = () => {
+export const useManageProduct =()=>{
     const { data: session, status } = useSession();
-    const [listOrderHistory, setListOrderHistory] = useState<OrderRespone[]>([]);
+    const [listItems, setListItems] = useState<ItemRes[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchOrderHistory = async () => {
+        const fetchListItem = async () => {
             const accessToken = session?.accessToken;
 
             if (accessToken) {
                 try {
                     setIsLoading(true);
-                    const orders = await getOrderHistory(accessToken);
-                    setListOrderHistory(orders);
+                    const items = await getItems(0,10);
+                    setListItems(items.content);
                 } catch (err) {
-                    console.error("Failed to fetch order history:", err);
-                    setError("Không thể lấy dữ liệu đơn hàng.");
+                    console.error("Failed to fetch list item:", err);
+                    setError("Không thể lấy dữ liệu sản phẩm.");
                     toast.error(error, {
                     description: 'Vui lòng kiểm tra lại đường truyền internet của bạn.',
                     });
@@ -34,8 +36,8 @@ export const useOrderHistory = () => {
             }
         };
 
-        fetchOrderHistory();
+        fetchListItem();
     }, [session?.accessToken, status]);
 
-    return { listOrderHistory, isLoading, error };
-};
+    return { listItems, isLoading, error };
+}

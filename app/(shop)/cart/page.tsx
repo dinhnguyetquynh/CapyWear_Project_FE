@@ -38,7 +38,7 @@ useEffect(() => {
     fetchData(); // <--- PHẢI GỌI HÀM NÀY THÌ NÓ MỚI CHẠY!
 }, [accessToken, session.status]); 
 
-    const toggleSelect = (id:number)=>{
+    const toggleSelect = (id: number)=>{
         setSelectedIds(prev=>
             prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
         )

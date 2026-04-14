@@ -13,3 +13,9 @@ export interface PageResponse<T> {
   totalPages: number;
   last: boolean;
 }
+export interface ItemReq{
+  name:string;
+  urlImg:string;
+  price:number;
+  inventoryQty:number;
+}

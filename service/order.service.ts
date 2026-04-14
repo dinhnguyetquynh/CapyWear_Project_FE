@@ -25,6 +25,15 @@ export interface OrderDetailDTO{
     total:number;
 }
 
+export interface OrderPendingRes{
+    orderId:number;
+    userEmail:string;
+    orderDate:string;
+    totalOrder:number;
+    status:string;
+    details:OrderDetailDTO[];
+}
+
 
 export const createOrder = async(o:OrderRequest,token:string):Promise<OrderRespone>=>{
     const backendUrl = process.env.BACKEND_API_URL;

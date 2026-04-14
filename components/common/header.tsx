@@ -40,7 +40,7 @@ export default function Header(){
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="cursor-pointer">
-                <Link href="/orders" className="w-full">
+                <Link href="/history" className="w-full">
                   Đơn hàng của tôi
                 </Link>
               </DropdownMenuItem>

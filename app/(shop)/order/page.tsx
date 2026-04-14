@@ -78,7 +78,8 @@ export default function OrderBill(){
         {items.map((item) => (
             <OrderItem
                 key={item.id}
-                img={item.itemRes.urlImg}
+                id={item.id}
+                imgUrl={item.itemRes.urlImg}
                 itemName={item.itemRes.name}
                 quantity={item.quantity}
                 price={item.purchasePrice}

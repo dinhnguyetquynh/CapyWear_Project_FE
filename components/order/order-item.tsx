@@ -20,12 +20,12 @@ export default function OrderItem(order:OrderDetailDTO){
 
             {/* Cột 3: Đơn giá */}
             <div className="text-right text-gray-600">
-                {order.price}
+                {order.price.toLocaleString("vi")}VND
             </div>
 
             {/* Cột 4: Thành tiền */}
             <div className="text-right font-semibold text-blue-600">
-                {order.total}
+                {order.total.toLocaleString("vi")}VND
             </div>
     </div>
     )
