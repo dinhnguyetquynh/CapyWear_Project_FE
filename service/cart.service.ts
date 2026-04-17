@@ -1,11 +1,8 @@
 'use server';
+import { CartDetailReq } from "@/types/cart";
 import { ApiRes } from "@/types/general";
 
- //run on server
-export interface CartDetailReq{
-    itemId:number,
-    quantity:number
-}
+
 
 export async function addToCartAction(req: CartDetailReq, token?: string): Promise<ApiRes<any>> {
   const backendUrl = process.env.BACKEND_API_URL;

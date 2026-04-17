@@ -1,6 +1,7 @@
 'use client';
-import { addToCartAction } from "@/actions/cart";
+
 import { CartDetailRes } from "@/components/cart/cart-detail";
+import { addToCartAction } from "@/service/cart.service";
 import { ItemRes } from "@/types/item";
 import { useSession } from "next-auth/react";
 import Image from "next/image";

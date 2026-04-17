@@ -1,5 +1,6 @@
 'use client';
-import { deleteCartItemAction } from "@/actions/cart";
+
+import { deleteCartItemAction } from "@/service/cart.service";
 import { ItemRes } from "@/types/item";
 import { useSession } from "next-auth/react";
 import Image from "next/image";

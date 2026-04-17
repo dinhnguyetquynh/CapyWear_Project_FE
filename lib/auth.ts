@@ -85,33 +85,27 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   CredentialsProvider({
-    id: "otp-verify", // Đặt ID riêng để phân biệt với login thường
+    id: "otp-verify", 
     name: "OTP Verification",
     credentials: {
       otp: { type: "text" },
       userId: { type: "text" }
     },
     async authorize(credentials) {
-      // Gọi chính cái API mà bạn bảo là "đã trả về token" đó
       const res = await fetch(`${process.env.BACKEND_API_URL}/api/public/verify-otp?otp=${credentials?.otp}&userId=${credentials?.userId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
       });
 
       const data = await res.json();
-
-      // Nếu Backend trả về token thành công
       if (res.ok && data.accessToken) {
-        // TRẢ VỀ DATA NÀY: NextAuth sẽ tự động cầm lấy nó 
-        // và ném vào cái hàm "jwt callback" mà bạn đã viết sẵn
         return data; 
       }
 
-      return null; // Nếu mã sai thì trả về null
+      return null; 
   }
 })
   ],
-  //After user login successful, callbacks will be called.
   callbacks: {
     async jwt({ token, user, account }): Promise<JWT> {
       console.log("--- JWT Callback ---");

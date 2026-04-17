@@ -1,7 +1,7 @@
 'use client'
-import { getCartList } from "@/actions/cart";
 import CartDetail, { CartDetailRes } from "@/components/cart/cart-detail";
 import { authOptions } from "@/lib/auth";
+import { getCartList } from "@/service/cart.service";
 import { getServerSession } from "next-auth";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
