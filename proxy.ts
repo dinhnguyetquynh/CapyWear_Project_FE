@@ -11,19 +11,31 @@ interface DecodedToken {
   exp: number;
 }
 
-// 2. Danh sách các route bảo vệ cho User (NextAuth)
 const userProtectedRoutes = ['/cart', '/profile'];
 
 export async function proxy(request: NextRequest) {
   console.log("FILE NÀY ĐANG CHẠY");
   const { pathname } = request.nextUrl;
-
-  // --- TÌNH HUỐNG 1: XỬ LÝ ADMIN ROUTE (Dùng AccessToken trong Cookie) ---
-  if (pathname.startsWith('/admin')) {
-    const token = (await getToken({ 
+  const token = (await getToken({ 
     req: request, 
     secret: process.env.NEXTAUTH_SECRET 
   })) as JWT | null;
+
+  // NẾU Ở TRANG CHỦ MÀ LÀ ADMIN THÌ ĐẨY VÀO TRANG QUẢN TRỊ ---
+  if (pathname === '/' && token?.accessToken) {
+    try {
+      const decoded = jwtDecode<DecodedToken>(token.accessToken as string);
+      if (decoded.roles?.includes('ADMIN')) {
+        return NextResponse.redirect(new URL('/admin', request.url));
+      }
+    } catch (e) {
+      console.error("Lỗi decode tại trang chủ:", e);
+    }
+  }
+
+
+  // --- TÌNH HUỐNG 1: XỬ LÝ ADMIN ROUTE (Dùng AccessToken trong Cookie) ---
+  if (pathname.startsWith('/admin')) {
 
     if (!token?.accessToken) {
       const loginUrl = new URL('/login', request.url);
@@ -76,6 +88,7 @@ export async function proxy(request: NextRequest) {
 // 3. Gộp tất cả Matcher vào đây
 export const config = {
   matcher: [
+    '/',
     '/admin/:path*',
     '/cart/:path*',
     '/profile/:path*',

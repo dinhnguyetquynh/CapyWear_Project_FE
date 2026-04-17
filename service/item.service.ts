@@ -1,5 +1,5 @@
 import { ApiRes } from "@/types/general";
-import { ItemReq, ItemRes, PageResponse } from "@/types/item";
+import { ItemReq, ItemRes, PageResponse, SearchSuggestion } from "@/types/item";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/item";
 
@@ -76,4 +76,21 @@ export const deleteItem = async(token:string,itemId:number):Promise<ApiRes<numbe
     throw new Error(errorData.message || "Không thể xoá sản phẩm");
   }
   return await res.json();
+}
+
+export const findItem = async (token: string, q: string): Promise<SearchSuggestion[]> => {
+  const res = await fetch(`${API_URL}/search/suggest?q=${q}`, {
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Không thể tìm kiếm sản phẩm");
+  }
+
+  const data: ApiRes<SearchSuggestion[]> = await res.json();
+  return data.result; 
 }

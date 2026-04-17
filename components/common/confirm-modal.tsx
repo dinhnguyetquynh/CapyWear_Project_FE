@@ -21,7 +21,7 @@ export default function ConfirmModal({ isOpen, title, description, onConfirm, on
             disabled={loading}
             className="px-4 py-2 bg-red-500 text-white rounded disabled:bg-red-300"
           >
-            {loading ? "Đang xóa..." : "Xác nhận xóa"}
+            {loading ? "Đang thực hiện..." : "Xác nhận"}
           </button>
         </div>
       </div>

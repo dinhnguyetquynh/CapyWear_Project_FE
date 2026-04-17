@@ -19,3 +19,7 @@ export interface ItemReq{
   price:number;
   inventoryQty:number;
 }
+export interface SearchSuggestion {
+  id: number;
+  name: string;
+}

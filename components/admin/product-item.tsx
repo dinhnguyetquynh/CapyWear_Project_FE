@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { PencilLine, Trash2 } from 'lucide-react';
 import { ItemRes } from '@/types/item';
-import AddProductModal from '@/app/admin/AddProductModal';
+import AddProductModal from '@/components/admin/AddProductModal';
 import { useSession } from 'next-auth/react';
 import { deleteItem, updateItem } from '@/service/item.service';
 import { toast } from 'sonner';

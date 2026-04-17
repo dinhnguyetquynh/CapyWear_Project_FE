@@ -1,7 +1,7 @@
 'use client'
 import ProductItem from "@/components/admin/product-item";
 import { ItemRes } from "@/types/item";
-import AddProductModal from "./AddProductModal";
+import AddProductModal from "../../components/admin/AddProductModal";
 import { useState } from "react";
 import { createItem } from "@/service/item.service";
 import { useSession } from "next-auth/react";
