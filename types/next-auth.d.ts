@@ -9,9 +9,11 @@ declare module "next-auth" {
     accessToken?: string;
     refreshToken?: string;
     error?: "RefreshAccessTokenError";
+    roles?: string[];
+    username?: string;
     user: {
       id?: string;
-    } & DefaultSession["user"]; // Kết hợp với các trường mặc định (name, email, image)
+    } & DefaultSession["user"]; 
   }
 
   /**
@@ -32,5 +34,6 @@ declare module "next-auth/jwt" {
     accessTokenExpires?: number; 
     error?: "RefreshAccessTokenError";
     role?:string;
+    username?: string;
   }
 }

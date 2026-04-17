@@ -1,9 +1,15 @@
+import { jwtDecode } from "jwt-decode";
 import { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 // Hàm xử lý việc gọi API Refresh Token
+interface DecodedToken {
+  roles: string[];
+  exp: number;
+  sub:string;
+}
 async function refreshAccessToken(token: JWT): Promise<JWT>{
   try {
     const baseUrl = process.env.BACKEND_API_URL;
@@ -78,6 +84,32 @@ export const authOptions: NextAuthOptions = {
         return null;
       },
     }),
+  CredentialsProvider({
+    id: "otp-verify", // Đặt ID riêng để phân biệt với login thường
+    name: "OTP Verification",
+    credentials: {
+      otp: { type: "text" },
+      userId: { type: "text" }
+    },
+    async authorize(credentials) {
+      // Gọi chính cái API mà bạn bảo là "đã trả về token" đó
+      const res = await fetch(`${process.env.BACKEND_API_URL}/api/public/verify-otp?otp=${credentials?.otp}&userId=${credentials?.userId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+
+      // Nếu Backend trả về token thành công
+      if (res.ok && data.accessToken) {
+        // TRẢ VỀ DATA NÀY: NextAuth sẽ tự động cầm lấy nó 
+        // và ném vào cái hàm "jwt callback" mà bạn đã viết sẵn
+        return data; 
+      }
+
+      return null; // Nếu mã sai thì trả về null
+  }
+})
   ],
   //After user login successful, callbacks will be called.
   callbacks: {
@@ -96,22 +128,23 @@ export const authOptions: NextAuthOptions = {
           backendResponse = await res.json();
         } 
        
-        else if (account.provider === "credentials") {
+        else if (account.provider === "credentials"|| account.provider === "otp-verify") {
           backendResponse = user; 
         }
 
        
         if (backendResponse && backendResponse.accessToken) {
+          const decoded = jwtDecode<DecodedToken>(backendResponse.accessToken);
           return {
             ...token,//This property is saved on cookie to use for request afer. 
             accessToken: backendResponse.accessToken,
             refreshToken: backendResponse.refreshToken,
             accessTokenExpires: Date.now() + backendResponse.expiresIn * 1000,
+            roles: decoded.roles,
+            username: decoded.sub,
           };
         }
-      }
-
-     
+      }     
       if (token.accessTokenExpires && Date.now() < (token.accessTokenExpires as number)) {
         return token;
       }
@@ -124,7 +157,9 @@ export const authOptions: NextAuthOptions = {
       console.log("Token hiện có:", token); 
       session.accessToken = token.accessToken as string;
       session.refreshToken = token.refreshToken as string;
+      session.roles = token.roles as string[];
       session.error = token.error;
+      session.username=token.username;
       return session;
     },
   },
@@ -135,3 +170,4 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
 };
+

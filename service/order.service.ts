@@ -87,3 +87,52 @@ export const getOrderHistory = async(token:string):Promise<OrderRespone[]>=>{
         throw error;
     }
 }
+
+export const getOrderPending = async(token:string):Promise<OrderPendingRes[]>=>{
+    const backendUrl = process.env.BACKEND_API_URL;
+    try{
+        const response = await fetch(`${backendUrl}/api/order/pending`,{
+            method:"GET",
+            headers:{
+               'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`,
+            }
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Có lỗi xảy ra khi tải danh sach don hang");
+        }
+
+        const data:ApiRes<OrderPendingRes[]> = await response.json();
+        return data.result;
+
+    }catch(error){
+        console.error("Loi khi goi api getOrderPending:",error);
+        throw error;
+    }
+    
+}
+export const changeStatusOrder = async(token:string,orderId:number):Promise<OrderPendingRes>=>{
+    const backendUrl = process.env.BACKEND_API_URL;
+    try{
+        const response = await fetch(`${backendUrl}/api/order/${orderId}`,{
+            method:"PATCH",
+            headers:{
+               'Content-Type': 'application/json',
+               'Authorization': `Bearer ${token}`,
+            }
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Có lỗi xảy ra khi thay doi trang thai don hang");
+        }
+
+        const data:ApiRes<OrderPendingRes> = await response.json();
+        return data.result;
+
+    }catch(error){
+        console.error("Loi khi goi api changeStatusOrder:",error);
+        throw error;
+    }
+    
+}

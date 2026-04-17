@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { jwtDecode } from 'jwt-decode';
 import { getToken, JWT } from "next-auth/jwt";
 
-// 1. Định nghĩa Interface cho JWT thủ công (Admin)
+
 interface DecodedToken {
   sub: string;
   roles: string[];

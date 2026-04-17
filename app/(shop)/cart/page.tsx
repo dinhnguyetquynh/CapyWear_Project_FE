@@ -56,6 +56,10 @@ useEffect(() => {
         localStorage.setItem('checkoutItems', JSON.stringify(selectedItems));
         router.push('/order');
     };
+    const handleDeleteFromState = (id: number) => {
+        setCartItems(prev => prev.filter(item => item.id !== id));
+        setSelectedIds(prev => prev.filter(itemId => itemId !== id));
+    };
     if (loading) return <div>Đang tải giỏ hàng...</div>;
     return(
         <main className="max-w-5xl mx-auto p-6">
@@ -81,6 +85,7 @@ useEffect(() => {
                     );
                     setCartItems(newCart); 
                     }}
+                    onDeleteSuccess ={handleDeleteFromState}
                 />
             ))}
 

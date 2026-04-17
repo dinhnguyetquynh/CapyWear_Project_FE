@@ -3,12 +3,14 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { getOrderHistory, OrderRespone } from "@/service/order.service";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export const useOrderHistory = () => {
     const { data: session, status } = useSession();
     const [listOrderHistory, setListOrderHistory] = useState<OrderRespone[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     useEffect(() => {
         const fetchOrderHistory = async () => {
@@ -29,8 +31,8 @@ export const useOrderHistory = () => {
                     setIsLoading(false);
                 }
             } else if (status !== "loading") {
-                // Nếu không còn loading mà cũng không có token
                 setIsLoading(false);
+                router.push("/login");
             }
         };
 

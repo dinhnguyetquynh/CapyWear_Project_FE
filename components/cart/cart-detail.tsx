@@ -20,10 +20,11 @@ interface CartDetailProps{
     isSelected: boolean;
     onSelect: () => void;
     onUpdateQuantity: (newQuantity: number) => void;
+    onDeleteSuccess: (id: number) => void;
 }
-export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUpdateQuantity }: CartDetailProps){
+export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUpdateQuantity,onDeleteSuccess}: CartDetailProps){
     const [count,setCount] = useState(cd.quantity);
-    const [price,setPrice] = useState(cd.purchasePrice);
+    const [price,setPrice] = useState(cd.totalItem);
     
     const router = useRouter();
     const handleDecrement =()=>{
@@ -45,7 +46,7 @@ export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUp
             const response = await deleteCartItemAction(cdId, accessToken);
             if (response.code === 200) {
                 alert("Xóa thành công!");
-                router.refresh();
+                onDeleteSuccess(cdId);
             } else {
                 alert(response.message || "Có lỗi xảy ra");
             }
@@ -69,7 +70,7 @@ export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUp
             <div className="flex-1 flex flex-col gap-2">
                 <div>
                     <h2 className="text-lg font-semibold text-gray-800">{cd.itemRes.name}</h2>
-                    <h4 className="text-red-600 font-medium text-lg">{price}</h4>
+                    <h4 className="text-red-600 font-medium text-lg">{price.toLocaleString("vi")}VND</h4>
                 </div>
                
                 <div className="flex items-center border border-gray rounded-lg w-fit overflow-hidden">

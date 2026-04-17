@@ -1,20 +1,45 @@
 "use client"
 
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react"
 
 export default function LoginPage(){
     const[email,setEmail] = useState("");
     const[password,setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
-    const handleLogin = async() =>{
-        const result = await signIn("credentials", {
-        email: email,
-        password: password,
-        redirect: true,
-        callbackUrl: "/", 
-  });
+    const handleLogin = async () => {
+    setLoading(true);
+    const result = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      alert("Đăng nhập thất bại: " + result.error);
+      setLoading(false);
+      return;
     }
+
+    const session = await getSession();
+
+    if (session) {
+      const roles = session.roles as string[]; 
+      console.log("roles:"+roles)
+      if (roles?.includes("ADMIN")) {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
+      
+      router.refresh(); 
+    }
+    setLoading(false);
+  };
 
     return(
         <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
@@ -60,6 +85,8 @@ export default function LoginPage(){
                         <img src="https://authjs.dev/img/providers/google.svg" alt="Google" className="w-5 h-5" />
                         Đăng nhập bằng Google
                     </button>
+
+                    <Link href="/account" className="block text-center text-blue-400 hover:underline">Tạo tài khoản</Link>
             </div>
             </div>
         </div>

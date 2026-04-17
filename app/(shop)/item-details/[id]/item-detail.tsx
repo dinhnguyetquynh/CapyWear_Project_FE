@@ -1,5 +1,6 @@
 'use client';
 import { addToCartAction } from "@/actions/cart";
+import { CartDetailRes } from "@/components/cart/cart-detail";
 import { ItemRes } from "@/types/item";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -47,6 +48,17 @@ export default  function ItemDetail({item}:Props){
       }
     } else {
       console.log("Chuyển đến trang thanh toán với item:", item.name);
+      const today = new Date().toISOString().split('T')[0];
+      const props : CartDetailRes = {
+        id:item.id,
+        purchasePrice:item.price,
+        quantity:count,
+        totalItem:item.price*count,
+        dateAdd:today,
+        itemRes:item
+      }
+      localStorage.setItem('checkoutItems',JSON.stringify([props]));
+      router.push("/order")
     }
   };
 

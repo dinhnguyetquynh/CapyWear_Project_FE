@@ -20,7 +20,9 @@ export default function OrderBill(){
     useEffect(() => {
         const savedItems = localStorage.getItem('checkoutItems');
         if (savedItems) {
-        setItems(JSON.parse(savedItems));
+        const parsedData = JSON.parse(savedItems);
+        const standardizedData = Array.isArray(parsedData) ? parsedData : [parsedData];
+        setItems(standardizedData);
         }
     }, []);
     const totalBill = items.reduce((sum, item) => sum + (item.purchasePrice * item.quantity), 0);
