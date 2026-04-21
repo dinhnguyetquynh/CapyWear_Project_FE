@@ -15,10 +15,12 @@ export default function CreateAccount(){
     const handleRegister = async () => {
         console.log("ĐÃ GỌI TỚI HÀM HANDLE REGISTER")
         if (!email || !password || !confirmPassword) {
+            alert("Vui lòng điền đầy đủ thông tin");
             setError("Vui lòng điền đầy đủ thông tin");
             return;
         }
         if (password !== confirmPassword) {
+            alert("Mật khẩu không khớp");
             setError("Mật khẩu nhập lại không khớp");
             return;
         }
@@ -33,6 +35,8 @@ export default function CreateAccount(){
             const userEmail = result.email;
             router.push(`/verify?id=${id}&email=${encodeURIComponent(userEmail)}`);
         } catch (err: any) {
+            console.log(err.message);
+            alert(err.message);
             setError(err.message || "Có lỗi xảy ra, vui lòng thử lại");
         } finally {
             setIsLoading(false);
@@ -80,9 +84,15 @@ export default function CreateAccount(){
                 <button 
                     className="mt-8 border p-3 rounded-xl text-lg bg-green-500 text-white hover:bg-green-400 active:scale-[0.98] transition-all"
                     onClick={handleRegister}
+                    disabled={isLoading}
                 >
-                    Tạo tài khoản
+                     {isLoading ? "Đang đăng ký..." : "Đăng ký"}
                 </button>
+                {isLoading && (
+                    <p style={{ color: "blue", marginTop: "10px" }}>
+                        Đang xử lý. Vui lòng đợi chút nhé...
+                    </p>
+                )}
             </div>
 
         </div>

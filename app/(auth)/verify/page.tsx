@@ -62,7 +62,7 @@ const OTPInput = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-md w-full max-w-md mx-auto">
+    <div className="flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-md w-full max-w-md mx-auto my-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Xác thực OTP</h2>
       <p className="text-gray-500 mb-8 text-center">Chúng tôi đã gửi mã gồm 6 chữ số đến thiết bị của bạn.</p>
       

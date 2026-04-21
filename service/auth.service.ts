@@ -15,18 +15,28 @@ export interface AuthResponse{
     refreshToken:string;
     expiresIn:number;
 }
-export const registerAccount = async(data:AccountCreateReq):Promise<UserRes>=>{
-    const backendUrl = process.env.BACKEND_API_URL;
-    const res = await fetch(`http://localhost:8080/api/public/register`,{
-        method:'POST',
-        headers:{
-               'Content-Type': 'application/json'
+export const registerAccount = async (data: AccountCreateReq): Promise<UserRes> => {
+    try {
+        const res = await fetch(`http://localhost:8080/api/public/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-        body:JSON.stringify(data)    
-    });
-    return res.json();
-}
+            body: JSON.stringify(data)
+        });
 
+        const result = await res.json();
+
+        if (!res.ok) {
+            throw new Error(result.message || "Register failed");
+        }
+
+        return result;
+
+    } catch (error: any) {
+        throw error;
+    }
+};
 export const verifyOtp = async(otp:string,userId:number):Promise<AuthResponse>=>{
    try {
     const res = await fetch(`http://localhost:8080/api/public/verify-otp?otp=${otp}&userId=${userId}`, {

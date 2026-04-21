@@ -7,6 +7,7 @@ export default function HistoryOrder({ orders }: { orders: OrderRespone[] }){
     return(
         <div>
            <div>
+                <div className="mb-4 text-center font-bold">LỊCH SỬ ĐƠN HÀNG</div>
                 {orders.map((order)=>(
                 <div key={order.orderId} className="border border-gray-300 p-4 rounded-2xl mb-4 pb-2">
                     <div>Mã Order: {order.orderId}</div>
