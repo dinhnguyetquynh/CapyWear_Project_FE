@@ -1,6 +1,13 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
+import { CartProvider } from "./CartContext";
 
 export default function NextAuthProvider({ children }: { children: React.ReactNode }) {
-  return <SessionProvider>{children}</SessionProvider>;
+  return (
+    <SessionProvider>
+      <CartProvider>
+        {children}
+      </CartProvider>
+    </SessionProvider>
+  );
 }

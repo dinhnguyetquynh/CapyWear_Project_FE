@@ -17,7 +17,7 @@ export interface AuthResponse{
 }
 export const registerAccount = async (data: AccountCreateReq): Promise<UserRes> => {
     try {
-        const res = await fetch(`http://localhost:8080/api/public/register`, {
+        const res = await fetch(`https://capywear-project.onrender.com/api/public/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +39,7 @@ export const registerAccount = async (data: AccountCreateReq): Promise<UserRes> 
 };
 export const verifyOtp = async(otp:string,userId:number):Promise<AuthResponse>=>{
    try {
-    const res = await fetch(`http://localhost:8080/api/public/verify-otp?otp=${otp}&userId=${userId}`, {
+    const res = await fetch(`https://capywear-project.onrender.com/api/public/verify-otp?otp=${otp}&userId=${userId}`, {
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json',

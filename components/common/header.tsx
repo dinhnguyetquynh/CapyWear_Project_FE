@@ -6,6 +6,7 @@ import handleLogout from "@/service/general.service";
 import { useEffect, useRef, useState } from "react";
 import { findItem } from "@/service/item.service";
 import { SearchSuggestion } from "@/types/item";
+import { useCart } from "@/context/CartContext";
 
 export default function Header(){
   const session = useSession();
@@ -16,6 +17,7 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const accessToken = session.data?.accessToken;
+  const { cartCount } = useCart();
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
@@ -95,9 +97,11 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
             className="p-2 hover:bg-gray-100 rounded-full relative flex items-center justify-center"
           >
             🛒 
-            <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-              2
-            </span>
+            {/* {cartCount > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )} */}
           </Link>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -1,22 +1,10 @@
 import { ApiRes } from "@/types/general";
 import { ItemReq, ItemRes, PageResponse, SearchSuggestion } from "@/types/item";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/item";
-
-// export const getItems = async (page = 0, size = 10):Promise<PageResponse<ItemRes>> => {
-//   const res = await fetch(`${API_URL}?page=${page}&size=${size}`, {
-//     // Next.js sẽ lưu cache dữ liệu này. 
-//     // revalidate: 60 nghĩa là sau 60s nó mới kiểm tra xem backend có gì mới không.
-//     next: { revalidate: 60 }, 
-//   });
-
-//   if (!res.ok) throw new Error("Không thể lấy danh sách sản phẩm");
-  
-//   return res.json();
-// };
+const API_URL =process.env.BACKEND_API_URL || "https://capywear-project.onrender.com";
 
 export const getItemDetail = async(itemId : number):Promise<ApiRes<ItemRes>> =>{
-  const res = await fetch(`${API_URL}/${itemId}`, {
+  const res = await fetch(`${API_URL}/api/item/${itemId}`, {
     next: { revalidate: 60 }, 
   });
 
@@ -29,7 +17,7 @@ export const getItemDetail = async(itemId : number):Promise<ApiRes<ItemRes>> =>{
 }
 
 export const updateItem = async(itemId:number,token:string,req:ItemReq):Promise<ApiRes<ItemRes>>=>{
-  const res = await fetch(`${API_URL}/${itemId}`,{
+  const res = await fetch(`${API_URL}/api/item/${itemId}`,{
     method:"PATCH",
      headers:{
                'Content-Type': 'application/json',
@@ -47,7 +35,7 @@ export const updateItem = async(itemId:number,token:string,req:ItemReq):Promise<
 
 // api/item.ts
 export const createItem = async (token: string, data: ItemReq): Promise<ApiRes<ItemRes>> => {
-  const res = await fetch(`${API_URL}`, {
+  const res = await fetch(`${API_URL}/api/item/`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
@@ -64,7 +52,7 @@ export const createItem = async (token: string, data: ItemReq): Promise<ApiRes<I
 };
 
 export const deleteItem = async(token:string,itemId:number):Promise<ApiRes<number>>=>{
-  const res = await fetch(`${API_URL}/${itemId}`,{
+  const res = await fetch(`${API_URL}/api/item/${itemId}`,{
     method:"DELETE",
     headers: {
       'Content-Type': 'application/json',
@@ -79,7 +67,7 @@ export const deleteItem = async(token:string,itemId:number):Promise<ApiRes<numbe
 }
 
 export const findItem = async (token: string, q: string): Promise<SearchSuggestion[]> => {
-  const res = await fetch(`${API_URL}/search/suggest?q=${q}`, {
+  const res = await fetch(`${API_URL}/api/item/search/suggest?q=${q}`, {
     method: "GET",
     headers: {
       'Content-Type': 'application/json',
@@ -117,7 +105,8 @@ export const getItems = async (
   }
 
   // 3. Gọi fetch với query string đã được tạo tự động
-  const res = await fetch(`${API_URL}/range-price?${params.toString()}`, {
+  console.log('API URL :'+API_URL);
+  const res = await fetch(`${API_URL}/api/item/range-price?${params.toString()}`, {
     next: { revalidate: 60 }, 
   });
 

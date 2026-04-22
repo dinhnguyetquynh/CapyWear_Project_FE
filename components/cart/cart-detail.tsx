@@ -1,5 +1,6 @@
 'use client';
 
+import { useCart } from "@/context/CartContext";
 import { deleteCartItemAction } from "@/service/cart.service";
 import { ItemRes } from "@/types/item";
 import { useSession } from "next-auth/react";
@@ -26,6 +27,7 @@ interface CartDetailProps{
 export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUpdateQuantity,onDeleteSuccess}: CartDetailProps){
     const [count,setCount] = useState(cd.quantity);
     const [price,setPrice] = useState(cd.totalItem);
+    const { fetchCartCount } = useCart();
     
     const router = useRouter();
     const handleDecrement =()=>{
@@ -46,6 +48,7 @@ export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUp
         try {
             const response = await deleteCartItemAction(cdId, accessToken);
             if (response.code === 200) {
+                await fetchCartCount();
                 alert("Xóa thành công!");
                 onDeleteSuccess(cdId);
             } else {

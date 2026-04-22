@@ -1,6 +1,7 @@
 'use client';
 
 import { CartDetailRes } from "@/components/cart/cart-detail";
+import { useCart } from "@/context/CartContext";
 import { addToCartAction } from "@/service/cart.service";
 import { ItemRes } from "@/types/item";
 import { useSession } from "next-auth/react";
@@ -17,6 +18,7 @@ export default  function ItemDetail({item}:Props){
     const {data} = useSession();
     const { accessToken } = data || {}; 
     const isLoggedIn = !!data; 
+    const { fetchCartCount } = useCart();
 
     const handleIncrement =()=>{
         setCount(prev=>prev+1);
@@ -43,6 +45,7 @@ export default  function ItemDetail({item}:Props){
       console.log("ACCCESTOKEN:",accessToken);
       const res = await addToCartAction({ itemId: item.id, quantity: count }, accessToken);
       if(res.code==200){
+        await fetchCartCount();
         toast.success("Thành công",{description:res.message});
       }else {
         toast.error("Thất bại", { description: res.message });

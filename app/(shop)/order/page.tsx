@@ -65,7 +65,7 @@ export default function OrderBill(){
         <div className="max-w-full mx-auto p-4 bg-white rounded-xl shadow-sm">
         <div className="text-gray-500">
             <p className="font-bold">Mã đơn hàng:12345678</p>
-            <h3 className="font-bold mb-2">Ngày đặt hàng: 4/8/2026</h3>
+            <h3 className="font-bold mb-2">Ngày đặt hàng: {new Date().toLocaleDateString('vi-VN')}</h3>
         </div>
         {/* Header của bảng */}
         <div className="grid grid-cols-[100px_1fr_100px_150px_150px] gap-4 pb-4 mb-2 border-b-2 border-gray-200 text-sm font-bold text-gray-500 uppercase">
