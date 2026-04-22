@@ -89,7 +89,7 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
           )}
         </div>
         <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-gray-100 rounded-full">🔍</button>
+          {/* <button className="p-2 hover:bg-gray-100 rounded-full">🔍</button> */}
           <Link 
             href="/cart" 
             className="p-2 hover:bg-gray-100 rounded-full relative flex items-center justify-center"

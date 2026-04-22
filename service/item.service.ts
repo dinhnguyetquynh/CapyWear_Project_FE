@@ -3,17 +3,17 @@ import { ItemReq, ItemRes, PageResponse, SearchSuggestion } from "@/types/item";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/item";
 
-export const getItems = async (page = 0, size = 10):Promise<PageResponse<ItemRes>> => {
-  const res = await fetch(`${API_URL}?page=${page}&size=${size}`, {
-    // Next.js sẽ lưu cache dữ liệu này. 
-    // revalidate: 60 nghĩa là sau 60s nó mới kiểm tra xem backend có gì mới không.
-    next: { revalidate: 60 }, 
-  });
+// export const getItems = async (page = 0, size = 10):Promise<PageResponse<ItemRes>> => {
+//   const res = await fetch(`${API_URL}?page=${page}&size=${size}`, {
+//     // Next.js sẽ lưu cache dữ liệu này. 
+//     // revalidate: 60 nghĩa là sau 60s nó mới kiểm tra xem backend có gì mới không.
+//     next: { revalidate: 60 }, 
+//   });
 
-  if (!res.ok) throw new Error("Không thể lấy danh sách sản phẩm");
+//   if (!res.ok) throw new Error("Không thể lấy danh sách sản phẩm");
   
-  return res.json();
-};
+//   return res.json();
+// };
 
 export const getItemDetail = async(itemId : number):Promise<ApiRes<ItemRes>> =>{
   const res = await fetch(`${API_URL}/${itemId}`, {
@@ -94,3 +94,36 @@ export const findItem = async (token: string, q: string): Promise<SearchSuggesti
   const data: ApiRes<SearchSuggestion[]> = await res.json();
   return data.result; 
 }
+
+export const getItems = async (
+  page = 0, 
+  size = 10, 
+  minPrice?: number, 
+  maxPrice?: number
+): Promise<PageResponse<ItemRes>> => {
+  
+  // 1. Tạo đối tượng URLSearchParams để quản lý query params
+  const params = new URLSearchParams({
+    page: page.toString(),
+    size: size.toString(),
+  });
+
+  // 2. Chỉ thêm minPrice và maxPrice vào URL nếu chúng có giá trị
+  if (minPrice !== undefined && minPrice !== null) {
+    params.append("minPrice", minPrice.toString());
+  }
+  if (maxPrice !== undefined && maxPrice !== null) {
+    params.append("maxPrice", maxPrice.toString());
+  }
+
+  // 3. Gọi fetch với query string đã được tạo tự động
+  const res = await fetch(`${API_URL}/range-price?${params.toString()}`, {
+    next: { revalidate: 60 }, 
+  });
+
+  if (!res.ok) {
+    throw new Error("Không thể lấy danh sách sản phẩm");
+  }
+
+  return res.json();
+};

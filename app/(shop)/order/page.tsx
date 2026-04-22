@@ -125,7 +125,7 @@ export default function OrderBill(){
               
               <div className="mt-6 text-center">
                 <p className="text-sm text-gray-400">Số tiền cần thanh toán</p>
-                <p className="text-2xl font-black text-blue-600">200.000đ</p>
+                <p className="text-2xl font-black text-blue-600">{totalBill.toLocaleString('vi')}VND</p>
               </div>
             </div>
 
