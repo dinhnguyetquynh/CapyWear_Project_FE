@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 
 import Image from "next/image";
 import { redirect } from "next/navigation";
+export const dynamic = "force-dynamic";
 export default async function UserProfile(){
     const session = await getServerSession(authOptions);
     const accessToken = session?.accessToken;
