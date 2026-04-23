@@ -2,7 +2,7 @@
 'use client'
 import { getOrderHistory, OrderRespone } from "@/service/order.service";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useOrderHistory } from "./useOrderHistory";
 import HistoryOrder from "./history-order";
 
@@ -14,7 +14,9 @@ export default function HistoryOrderContainer(){
 
     return(
         <div>
-            <HistoryOrder orders={listOrderHistory}/>
+            <Suspense>
+                 <HistoryOrder orders={listOrderHistory}/>
+            </Suspense>
         </div>
     );
 }
