@@ -1,7 +1,7 @@
 import { getItems } from "@/service/item.service";
 import ItemCard from "@/components/item/item-card";
 import Pagination from "@/components/item/pagination";
-
+export const dynamic = "force-dynamic";
 export default async function HomePage({searchParams,}:{searchParams: Promise<{ page?: string; minPrice?: string; maxPrice?: string }>;}) {
   const params = await searchParams;
   const currentPage = Number(params.page) || 0;
