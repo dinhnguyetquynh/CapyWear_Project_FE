@@ -1,9 +1,7 @@
 "use client";
-
-import { verifyOtp } from '@/service/auth.service';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Suspense } from 'react';
 
 const OTPInput = () => {
   const searchParams = useSearchParams();
@@ -98,4 +96,10 @@ const OTPInput = () => {
   );
 };
 
-export default OTPInput;
+export default function VerifyPage(){
+  <main>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Đang tải...</div>}>
+        <OTPInput />
+    </Suspense>
+  </main>
+}
