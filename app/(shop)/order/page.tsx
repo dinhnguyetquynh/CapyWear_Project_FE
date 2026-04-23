@@ -7,11 +7,11 @@ import { createOrder, OrderRequest } from "@/service/order.service";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 
-export default function OrderBill(){
+const OrderBill=()=>{
     const [items, setItems] = useState<CartDetailRes[]>([]);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -147,4 +147,12 @@ export default function OrderBill(){
     </div>
     
     );
+}
+
+export default function OrderBillPage(){
+  return(
+    <Suspense fallback={<div>Loading...</div>}>
+      <OrderBill/>
+    </Suspense>
+  )
 }
