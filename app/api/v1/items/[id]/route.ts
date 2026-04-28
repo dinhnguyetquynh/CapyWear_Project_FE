@@ -1,12 +1,14 @@
+import { NextRequest } from "next/server";
+
 export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
+  req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
+
   const backendUrl = process.env.BACKEND_API_URL;
 
-  const res = await fetch(`${backendUrl}/api/item/${params.id}`, {
-    method: "GET",
-  });
+  const res = await fetch(`${backendUrl}/api/item/${id}`);
 
   const data = await res.json();
 
