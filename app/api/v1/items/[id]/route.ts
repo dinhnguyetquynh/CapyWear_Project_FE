@@ -4,6 +4,7 @@ export async function GET(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+  console.log("CALL API PROXY:");
   const { id } = await context.params;
 
   const backendUrl = process.env.BACKEND_API_URL;

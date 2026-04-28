@@ -2,9 +2,9 @@ import { ApiRes } from "@/types/general";
 import { ItemReq, ItemRes, PageResponse, SearchSuggestion } from "@/types/item";
 
 const API_URL =process.env.BACKEND_API_URL || "https://capywear-project.onrender.com";
-
+const API_FE ="https://capy-wear-project-fe.vercel.app";
 export const getItemDetail = async(itemId : number):Promise<ApiRes<ItemRes>> =>{
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/items/${itemId}`, {
+  const res = await fetch(`${API_FE}/api/v1/items/${itemId}`, {
     next: { revalidate: 60 }, 
   });
 
