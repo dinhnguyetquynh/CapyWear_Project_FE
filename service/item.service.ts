@@ -106,7 +106,7 @@ export const getItems = async (
 
   // 3. Gọi fetch với query string đã được tạo tự động
   console.log('API URL :'+API_URL);
-  const res = await fetch(`${API_URL}/api/item/range-price?${params.toString()}`, {
+  const res = await fetch(`${API_FE}/api/v1/items?${params.toString()}`, {
     next: { revalidate: 60 }, 
   });
 

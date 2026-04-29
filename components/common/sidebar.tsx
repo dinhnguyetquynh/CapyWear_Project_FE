@@ -5,21 +5,7 @@ const PRICE_RANGES = [
   { label: "1tr - 2tr", min: "1000000", max: "2000000" },
   { label: "Trên 2tr", min: "2000000", max: "" }, // Max trống nghĩa là không giới hạn trên
 ];
-// export default function Sidebar() {
-//   return (
-//     <div className="space-y-6">
-//       <div>
-//         <h3 className="text-lg font-bold mb-4 uppercase tracking-wider">Lọc theo giá</h3>
-//         <div className="space-y-2 text-sm text-gray-600">
-//           <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" /> Dưới 500k</label>
-//           <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" /> 500k - 1tr</label>
-//           <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" /> 1tr-2tr </label>
-//           <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" /> Trên 2tr </label>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
+
 
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
