@@ -9,7 +9,7 @@ const API_PREFIX = '/api'
 export const apiClient = {
    products: {
     list: async (params: ProductListParams): Promise<PageResponse<NextResponse>> => {
-      const res = await fetch(`${API_PREFIX}/${API_VERSION}/product?${new URLSearchParams(params as any)}`)
+      const res = await fetch(`${API_PREFIX}/${API_VERSION}/products?${new URLSearchParams(params as any)}`)
       return res.json()
     }
   }
