@@ -3,8 +3,9 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Pagination({
+function PaginationInner({
   currentPage,
   totalPages,
 }: {
@@ -14,7 +15,6 @@ export default function Pagination({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Hàm tạo URL mới khi đổi trang
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", pageNumber.toString());
@@ -25,7 +25,6 @@ export default function Pagination({
 
   return (
     <div className="flex justify-center gap-2 mt-8">
-      {/* Nút Quay lại */}
       <Link
         href={createPageURL(currentPage - 1)}
         className={`px-4 py-2 border rounded ${
@@ -35,7 +34,6 @@ export default function Pagination({
         Previous
       </Link>
 
-      {/* Danh sách các số trang */}
       {Array.from({ length: totalPages }, (_, i) => (
         <Link
           key={i}
@@ -48,7 +46,6 @@ export default function Pagination({
         </Link>
       ))}
 
-      {/* Nút Tiếp theo */}
       <Link
         href={createPageURL(currentPage + 1)}
         className={`px-4 py-2 border rounded ${
@@ -58,5 +55,14 @@ export default function Pagination({
         Next
       </Link>
     </div>
+  );
+}
+
+// Export component bọc Suspense — dùng ở nơi khác như bình thường
+export default function Pagination(props: { currentPage: number; totalPages: number }) {
+  return (
+    <Suspense fallback={null}>
+      <PaginationInner {...props} />
+    </Suspense>
   );
 }
