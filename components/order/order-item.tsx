@@ -1,8 +1,10 @@
 
 import { OrderDetailDTO } from "@/service/order.service";
+import { useFormatter } from "next-intl";
 import Image from "next/image";
 export default function OrderItem(order:OrderDetailDTO){
     console.log("ORDER IMG:"+ order.imgUrl);
+    const format = useFormatter();
     return(
         <div className="grid grid-cols-[100px_1fr_100px_150px_150px] gap-4 py-4 border-b border-gray-100 items-center hover:bg-gray-50 transition-colors">
             <div className="w-16 h-16 bg-gray-100 rounded-md flex items-center justify-center text-xs text-gray-400">
@@ -21,12 +23,12 @@ export default function OrderItem(order:OrderDetailDTO){
 
             {/* Cột 3: Đơn giá */}
             <div className="text-right text-gray-600">
-                {order.price.toLocaleString("vi")}VND
+                {format.number(order.price)} VNĐ
             </div>
 
             {/* Cột 4: Thành tiền */}
             <div className="text-right font-semibold text-blue-600">
-                {order.total.toLocaleString("vi")}VND
+                {format.number(order.total)} VNĐ
             </div>
     </div>
     )

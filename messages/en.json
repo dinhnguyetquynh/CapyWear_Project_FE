@@ -34,5 +34,27 @@
     "deleteItem": "Remove item",
     "deleteSuccess": "Deleted successfully!",
     "errorOccurred": "An error occurred"
+  },
+  "Order": {
+    "orderId": "Order ID",
+    "orderDate": "Order Date",
+    "colImage": "Image",
+    "colProduct": "Product",
+    "colQty": "Qty",
+    "colPrice": "Unit Price",
+    "colTotal": "Total",
+    "totalAmount": "Total Amount :",
+    "payNow": "Pay Now",
+    "qrTitle": "Pay via QR Code",
+    "qrDesc": "Open your Banking or E-wallet app to scan",
+    "amountToPay": "Amount to pay",
+    "autoConfirm": "The system will automatically confirm upon receipt of payment.",
+    "processing": "Processing",
+    "complete": "Complete",
+    "notLoggedIn": "Not logged in",
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "paySuccess": "Payment successful!",
+    "payFailed": "Order creation failed",
+    "processError": "An error occurred during processing. Please try again."
   }
 }

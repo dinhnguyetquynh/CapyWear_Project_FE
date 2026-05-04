@@ -34,5 +34,28 @@
     "deleteItem": "Xoá sản phẩm",
     "deleteSuccess": "Xóa thành công!",
     "errorOccurred": "Có lỗi xảy ra"
+  },
+  "Order": {
+    "orderId": "Mã đơn hàng",
+    "orderDate": "Ngày đặt hàng",
+    "colImage": "Hình ảnh",
+    "colProduct": "Sản phẩm",
+    "colQty": "SL",
+    "colPrice": "Đơn giá",
+    "colTotal": "Tổng",
+    "totalAmount": "Tổng tiền :",
+    "payNow": "Thanh toán ngay",
+    "qrTitle": "Thanh toán qua QR",
+    "qrDesc": "Mở ứng dụng Ngân hàng hoặc Ví điện tử để quét mã",
+    "amountToPay": "Số tiền cần thanh toán",
+    "autoConfirm": "Hệ thống sẽ tự động xác nhận sau khi nhận được tiền.",
+    "processing": "Đang xử lý",
+    "complete": "Hoàn thành",
+    "notLoggedIn": "Chưa đăng nhập",
+    "sessionExpired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    "paySuccess": "Thanh toán thành công!",
+    "payFailed": "Tạo đơn hàng thất bại",
+    "processError": "Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại."
   }
+
 }

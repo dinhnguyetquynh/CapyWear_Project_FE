@@ -34,5 +34,27 @@
     "deleteItem": "削除",
     "deleteSuccess": "削除しました！",
     "errorOccurred": "エラーが発生しました"
+  },
+  "Order": {
+    "orderId": "注文番号",
+    "orderDate": "注文日",
+    "colImage": "画像",
+    "colProduct": "商品",
+    "colQty": "数量",
+    "colPrice": "単価",
+    "colTotal": "合計",
+    "totalAmount": "合計金額 :",
+    "payNow": "今すぐ支払う",
+    "qrTitle": "QRコードで支払う",
+    "qrDesc": "銀行または電子マネーアプリを開いてスキャンしてください",
+    "amountToPay": "お支払い金額",
+    "autoConfirm": "入金確認後、システムが自動的に確認します。",
+    "processing": "処理中",
+    "complete": "完了",
+    "notLoggedIn": "未ログイン",
+    "sessionExpired": "セッションの有効期限が切れました。もう一度ログインしてください。",
+    "paySuccess": "支払いが完了しました！",
+    "payFailed": "注文の作成に失敗しました",
+    "processError": "処理中にエラーが発生しました。もう一度お試しください。"
   }
 }
