@@ -1,0 +1,27 @@
+{
+  "Header": {
+    "searchPlaceholder": "Search products...",
+    "account": "Account",
+    "myAccount": "My Account",
+    "myOrders": "My Orders",
+    "logout": "Logout"
+  },
+  "Sidebar": {
+    "filterPrice": "Filter by Price",
+    "clearFilters": "Clear all filters",
+    "ranges": {
+      "under500": "Under 500k",
+      "500to1": "500k - 1M",
+      "1to2": "1M - 2M",
+      "above2": "Above 2M"
+    }
+  },
+  "Footer": {
+    "story": "Leading fashion brand for those who love minimalism and quality.",
+    "support": "Support",
+    "returnPolicy": "Return Policy",
+    "sizeGuide": "Size Guide",
+    "orderCheck": "Order Tracking",
+    "connect": "Connect"
+  }
+}

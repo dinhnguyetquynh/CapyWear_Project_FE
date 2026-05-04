@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { findItem } from "@/service/item.service";
 import { SearchSuggestion } from "@/types/item";
 import { useCart } from "@/context/CartContext";
+import { useTranslations } from "next-intl";
 
 export default function Header(){
   const session = useSession();
@@ -18,6 +19,7 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
 
   const accessToken = session.data?.accessToken;
   const { cartCount } = useCart();
+  const t = useTranslations("Header");
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
@@ -62,7 +64,7 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
           <div className="relative">
             <input
               type="text"
-              placeholder="Tìm kiếm sản phẩm..."
+              placeholder={t("searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => searchQuery.length >= 2 && setIsOpen(true)}
@@ -106,7 +108,7 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                title="Tài khoản"
+                title={t("account")}
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center border border-transparent active:border-gray-200 outline-none"
               >
                 👤{userName}
@@ -116,12 +118,12 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
             <DropdownMenuContent align="end" className="w-48 mt-2 rounded-xl">
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href="/profile" className="w-full">
-                  Tài khoản của tôi
+                  {t("myAccount")}
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href="/history" className="w-full">
-                  Đơn hàng của tôi
+                  {t("myOrders")}
                 </Link>
               </DropdownMenuItem>
               
@@ -129,7 +131,7 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
               <DropdownMenuItem
                 onClick={handleLogout} 
                 className="cursor-pointer text-red-600 focus:text-red-600">
-                  Đăng xuất
+                  {t("logout")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

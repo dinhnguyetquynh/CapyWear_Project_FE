@@ -1,0 +1,27 @@
+{
+  "Header": {
+    "searchPlaceholder": "Tìm kiếm sản phẩm...",
+    "account": "Tài khoản",
+    "myAccount": "Tài khoản của tôi",
+    "myOrders": "Đơn hàng của tôi",
+    "logout": "Đăng xuất"
+  },
+  "Sidebar": {
+    "filterPrice": "Lọc theo giá",
+    "clearFilters": "Xoá tất cả bộ lọc",
+    "ranges": {
+      "under500": "Dưới 500k",
+      "500to1": "500k - 1tr",
+      "1to2": "1tr - 2tr",
+      "above2": "Trên 2tr"
+    }
+  },
+  "Footer": {
+    "story": "Thương hiệu thời trang hàng đầu dành cho những người yêu thích sự tối giản và chất lượng.",
+    "support": "Hỗ trợ",
+    "returnPolicy": "Chính sách đổi trả",
+    "sizeGuide": "Hướng dẫn chọn size",
+    "orderCheck": "Kiểm tra đơn hàng",
+    "connect": "Kết nối"
+  }
+}

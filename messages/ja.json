@@ -1,0 +1,27 @@
+{
+  "Header": {
+    "searchPlaceholder": "商品を検索...",
+    "account": "アカウント",
+    "myAccount": "マイアカウント",
+    "myOrders": "注文履歴",
+    "logout": "ログアウト"
+  },
+  "Sidebar": {
+    "filterPrice": "価格で絞り込む",
+    "clearFilters": "フィルターをクリア",
+    "ranges": {
+      "under500": "50万ドン未満",
+      "500to1": "50万 - 100万ドン",
+      "1to2": "100万 - 200万ドン",
+      "above2": "200万ドン以上"
+    }
+  },
+  "Footer": {
+    "story": "ミニマリズムと品質を追求する、最高のファッションブランド。",
+    "support": "サポート",
+    "returnPolicy": "返品・交換について",
+    "sizeGuide": "サイズガイド",
+    "orderCheck": "注文照会",
+    "connect": "公式SNS"
+  }
+}
