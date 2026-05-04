@@ -21,6 +21,14 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
   const { cartCount } = useCart();
   const t = useTranslations("Header");
 
+  // Hàm xử lý đổi ngôn ngữ
+  const switchLanguage = (locale: string) => {
+    // Lưu vào Cookie (hạn 1 năm)
+    document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
+    // Tải lại trang để áp dụng
+    window.location.reload();
+  };
+
   useEffect(() => {
     const delayDebounceFn = setTimeout(async () => {
       if (searchQuery.length >= 2) {
@@ -105,6 +113,11 @@ const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
               </span>
             )} */}
           </Link>
+          <div className="flex gap-2 mr-4">
+            <button onClick={() => switchLanguage('vi')} className="text-xs border p-1 rounded">VN</button>
+            <button onClick={() => switchLanguage('en')} className="text-xs border p-1 rounded">EN</button>
+            <button onClick={() => switchLanguage('ja')} className="text-xs border p-1 rounded">JA</button>
+         </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
