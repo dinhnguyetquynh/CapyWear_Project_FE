@@ -2,8 +2,6 @@ import { getItemDetail } from "@/service/item.service";
 import { notFound } from "next/navigation";
 import ItemDetail from "./item-detail";
 import ItemDetailContainer from "./item-detail-container";
-
-
 interface PageProps{
   params : {id:string};
 }
