@@ -4,12 +4,16 @@ import { authOptions } from "@/lib/auth";
 import { getCartList } from "@/service/cart.service";
 import { getServerSession } from "next-auth";
 import { getSession, useSession } from "next-auth/react";
+import { useFormatter, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 export default function ListCartDetail(){
     const router = useRouter();
 
     const session = useSession();
+
+    const t = useTranslations('Cart');
+    const format = useFormatter();
  
     console.log("Session lấy tại Server:", session);
 
@@ -49,7 +53,7 @@ useEffect(() => {
 
     const handleCheckout = () => {
         if (selectedIds.length === 0) {
-            alert("Vui lòng chọn ít nhất một sản phẩm để đặt hàng!");
+            alert(t('alertSelectItems'));
             return;
         }
         const selectedItems = cartItems.filter(item => selectedIds.includes(item.id));
@@ -60,14 +64,14 @@ useEffect(() => {
         setCartItems(prev => prev.filter(item => item.id !== id));
         setSelectedIds(prev => prev.filter(itemId => itemId !== id));
     };
-    if (loading) return <div>Đang tải giỏ hàng...</div>;
+   if (loading) return <div>{t('loading')}</div>;
     return(
         <main className="max-w-5xl mx-auto p-6">
-            <h1 className="text-2xl font-bold mb-8 text-gray-800">Giỏ hàng của bạn</h1>
+            <h1 className="text-2xl font-bold mb-8 text-gray-800">{t('title')}</h1>
 
                 {cartItems.length === 0 ? (
                     <div className="py-20 text-center border rounded-lg bg-gray-50">
-                    <p className="text-gray-500">Giỏ hàng của bạn đang trống.</p>
+                    <p className="text-gray-500">{t('empty')}</p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 gap-6">
@@ -91,13 +95,13 @@ useEffect(() => {
 
                     <div className="mt-6 flex flex-col items-end border-t pt-6">
                                 <div className="text-xl mb-4">
-                                    Tổng cộng ({selectedIds.length} món): 
+                                    {t('totalCount', { count: selectedIds.length })}
                                     <span className="text-red-600 font-bold ml-2">
-                                        {totalPrice.toLocaleString()} VNĐ
+                                        {format.number(totalPrice)} VNĐ
                                     </span>
                                 </div>
                                 <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition" onClick={handleCheckout}>
-                                    Đặt hàng
+                                   {t('checkout')}
                                 </button>
                             </div>
                     </div>  

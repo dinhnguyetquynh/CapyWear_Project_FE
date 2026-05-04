@@ -23,5 +23,16 @@
     "sizeGuide": "Size Guide",
     "orderCheck": "Order Tracking",
     "connect": "Connect"
+  },
+  "Cart": {
+    "title": "Your Shopping Cart",
+    "empty": "Your cart is currently empty.",
+    "loading": "Loading cart...",
+    "alertSelectItems": "Please select at least one item to checkout!",
+    "totalCount": "Total ({count} items):",
+    "checkout": "Checkout",
+    "deleteItem": "Remove item",
+    "deleteSuccess": "Deleted successfully!",
+    "errorOccurred": "An error occurred"
   }
 }

@@ -4,6 +4,7 @@ import { useCart } from "@/context/CartContext";
 import { deleteCartItemAction } from "@/service/cart.service";
 import { ItemRes } from "@/types/item";
 import { useSession } from "next-auth/react";
+import { useFormatter, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,6 +29,9 @@ export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUp
     const [count,setCount] = useState(cd.quantity);
     const [price,setPrice] = useState(cd.totalItem);
     const { fetchCartCount } = useCart();
+
+    const t = useTranslations('Cart');
+    const format = useFormatter();
     
     const router = useRouter();
     const handleDecrement =()=>{
@@ -49,10 +53,10 @@ export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUp
             const response = await deleteCartItemAction(cdId, accessToken);
             if (response.code === 200) {
                 await fetchCartCount();
-                alert("Xóa thành công!");
+                alert(t('deleteSuccess'));
                 onDeleteSuccess(cdId);
             } else {
-                alert(response.message || "Có lỗi xảy ra");
+                alert(response.message || t('errorOccurred'));
             }
         } catch (error) {
             console.error("Lỗi khi xóa:", error);
@@ -74,7 +78,7 @@ export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUp
             <div className="flex-1 flex flex-col gap-2">
                 <div>
                     <h2 className="text-lg font-semibold text-gray-800">{cd.itemRes.name}</h2>
-                    <h4 className="text-red-600 font-medium text-lg">{price.toLocaleString("vi")}VND</h4>
+                    <h4 className="text-red-600 font-medium text-lg">{format.number(price)} VNĐ</h4>
                 </div>
                
                 <div className="flex items-center border border-gray rounded-lg w-fit overflow-hidden">
@@ -104,7 +108,7 @@ export default function CartDetail({ cd, accessToken, isSelected, onSelect, onUp
                         onClick={()=>deleteItem(cd.id)} 
                         className="text-sm text-gray-500 hover:text-red-500 underline transition-colors"
                     >
-                        Xoá sản phẩm
+                       {t('deleteItem')}
                     </button>
                 </div>
             </div>

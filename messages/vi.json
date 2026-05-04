@@ -23,5 +23,16 @@
     "sizeGuide": "Hướng dẫn chọn size",
     "orderCheck": "Kiểm tra đơn hàng",
     "connect": "Kết nối"
+  },
+  "Cart": {
+    "title": "Giỏ hàng của bạn",
+    "empty": "Giỏ hàng của bạn đang trống.",
+    "loading": "Đang tải giỏ hàng...",
+    "alertSelectItems": "Vui lòng chọn ít nhất một sản phẩm để đặt hàng!",
+    "totalCount": "Tổng cộng ({count} món):",
+    "checkout": "Đặt hàng",
+    "deleteItem": "Xoá sản phẩm",
+    "deleteSuccess": "Xóa thành công!",
+    "errorOccurred": "Có lỗi xảy ra"
   }
 }
