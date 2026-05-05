@@ -10,8 +10,13 @@ const API_PREFIX = '/api'
 export const apiClient = {
    products: {
     list: async (params: ProductListParams): Promise<PageResponse<NextResponse>> => {
-      const res = await fetch(`${API_PREFIX}/${API_VERSION}/products?${new URLSearchParams(params as any)}`)
-      return res.json()
+      const filteredParams = Object.fromEntries(
+        Object.entries(params).filter(([_, v]) => v !== undefined && v !== null)
+      );
+      const queryString = new URLSearchParams(filteredParams as any).toString();
+
+      const res = await fetch(`${API_PREFIX}/${API_VERSION}/products?${queryString}`);
+      return res.json();
     },
     getDetail: async (itemId: string | number): Promise<ApiRes<ItemRes>> => {
       const res = await fetch(`${API_PREFIX}/${API_VERSION}/product-detail/${itemId}`);
