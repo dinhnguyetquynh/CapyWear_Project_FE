@@ -13,11 +13,14 @@ export default function ProductSection({ params }: { params:ProductListParams}) 
 
   useEffect(() => {
     const fetchData = async () => {
+      const minPrice = params.minPrice ? Number(params.minPrice) : undefined;
+      const maxPrice = params.maxPrice ? Number(params.maxPrice) : undefined;
+
       const response = await apiClient.products.list({
-          page: Number(params.page) || 0,
-          minPrice: Number(params.minPrice) || undefined,
-          maxPrice: Number(params.maxPrice) || undefined,
-        })
+        page: Number(params.page) || 0,
+        minPrice,
+        maxPrice,
+      });
       const data = response instanceof Response ? await response.json() : response;
       setItems(data?.content|| []);
       setTotalPages(data?.totalPages || 0);
