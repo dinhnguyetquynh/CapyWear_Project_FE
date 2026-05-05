@@ -26,7 +26,7 @@ export default function ProductSection({ params }: { params:ProductListParams}) 
       setTotalPages(data?.totalPages || 0);
     }
     fetchData()
-  }, [params])
+  },[params.page, params.minPrice, params.maxPrice])
 
   return (
     <>
