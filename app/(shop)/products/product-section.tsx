@@ -15,8 +15,8 @@ export default function ProductSection({ params }: { params:ProductListParams}) 
     const fetchData = async () => {
       const response = await apiClient.products.list({
           page: Number(params.page) || 0,
-          minPrice: Number(params.minPrice) || 0,
-          maxPrice: Number(params.maxPrice) || 50000000,
+          minPrice: Number(params.minPrice) || undefined,
+          maxPrice: Number(params.maxPrice) || undefined,
         })
       const data = response instanceof Response ? await response.json() : response;
       setItems(data?.content|| []);
