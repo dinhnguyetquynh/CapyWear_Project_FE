@@ -6,27 +6,26 @@ import Pagination from '@/components/item/pagination';
 import { ItemRes } from '@/types/item';
 import { ProductListParams } from '@/types/params';
 import { apiClient } from '@/lib/api-client';
+import { useSearchParams } from 'next/navigation';
 
-export default function ProductSection({ params }: { params:ProductListParams}) {
+export default function ProductSection() {
+  const searchParams = useSearchParams()
   const [items, setItems] = useState<ItemRes[]>([]);
   const [totalPages, setTotalPages] = useState(0)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const minPrice = params.minPrice ? Number(params.minPrice) : undefined;
-      const maxPrice = params.maxPrice ? Number(params.maxPrice) : undefined;
+  const page = Number(searchParams.get('page')) || 0
+  const minPrice = searchParams.get('minPrice') ? Number(searchParams.get('minPrice')) : undefined
+  const maxPrice = searchParams.get('maxPrice') ? Number(searchParams.get('maxPrice')) : undefined
 
-      const response = await apiClient.products.list({
-        page: Number(params.page) || 0,
-        minPrice,
-        maxPrice,
-      });
-      const data = response instanceof Response ? await response.json() : response;
-      setItems(data?.content|| []);
-      setTotalPages(data?.totalPages || 0);
+    useEffect(() => {
+    const fetchData = async () => {
+      const response = await apiClient.products.list({ page, minPrice, maxPrice })
+      const data = response instanceof Response ? await response.json() : response
+      setItems(data?.content || [])
+      setTotalPages(data?.totalPages || 0)
     }
     fetchData()
-  },[params.page, params.minPrice, params.maxPrice])
+  }, [page, minPrice, maxPrice])
 
   return (
     <>
@@ -35,7 +34,7 @@ export default function ProductSection({ params }: { params:ProductListParams}) 
           <ItemCard key={item.id} item={item} />
         ))}
       </div>
-      <Pagination currentPage={Number(params.page) || 0} totalPages={totalPages} />
+       <Pagination currentPage={page} totalPages={totalPages} />
     </>
   )
 }
