@@ -147,8 +147,8 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
-      console.log("--- Session Callback ---");
-      console.log("Token hiện có:", token); 
+      // console.log("--- Session Callback ---");
+      // console.log("Token hiện có:", token); 
       session.accessToken = token.accessToken as string;
       session.refreshToken = token.refreshToken as string;
       session.roles = token.roles as string[];
