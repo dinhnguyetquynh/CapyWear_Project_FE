@@ -27,45 +27,32 @@ export default function LoginPage(){
       return;
     }
 
-    // const session = await getSession();
 
-    // if (session) {
-    //   const roles = session.roles as string[]; 
-    //   console.log("roles:"+roles)
-    //   if (roles?.includes("ADMIN")) {
-    //     router.push("/admin");
-    //   } else {
-    //     router.push("/");
-    //   }
-      
-    //   router.refresh(); 
-    // }
-    // setLoading(false);
-
-    try{
-        let session = null;
-        for (let i = 0; i < 3; i++) {
-        session = await getSession();
-        if (session?.accessToken){
-            console.log("HAVE'T ACCESSTOKEN FROM SESSION");
-            break;
-        } 
+    // try{
+    //     let session = null;
+    //     for (let i = 0; i < 3; i++) {
+    //     session = await getSession();
+    //     if (session?.accessToken){
+    //         console.log("HAVE'T ACCESSTOKEN FROM SESSION");
+    //         break;
+    //     } 
     
-        await new Promise(res => setTimeout(res, 300)); // đợi 300ms rồi thử lại
-        }
+    //     await new Promise(res => setTimeout(res, 300)); // đợi 300ms rồi thử lại
+    //     }
 
-        if (session?.roles?.includes("ADMIN")) {
-        router.push("/admin");
-        } else {
-        router.push("/");
-        }
+    //     if (session?.roles?.includes("ADMIN")) {
+    //     router.push("/admin");
+    //     } else {
+    //     router.push("/");
+    //     }
 
-        router.refresh();
-        setLoading(false);
-    }catch{
-        alert("ERROR LOGIN");
-    }
-
+    //     router.refresh();
+    //     setLoading(false);
+    // }catch{
+    //     alert("ERROR LOGIN");
+    // }
+    router.push("/"); 
+    router.refresh();
     
   };
 
