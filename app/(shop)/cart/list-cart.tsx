@@ -10,6 +10,8 @@ import { Suspense, useEffect, useState } from "react";
 export default function ListCartDetail(){
     const router = useRouter();
 
+
+    //KHONG DUNG SESSION DE GOI API
     const session = useSession();
 
     const t = useTranslations('Cart');

@@ -5,7 +5,7 @@ const API_URL =process.env.BACKEND_API_URL || "https://capywear-project.onrender
 const API_FE ="https://capy-wear-project-fe.vercel.app";
 
 export const getItemDetail = async(itemId : number):Promise<ApiRes<ItemRes>> =>{
-  const res = await fetch(`${API_FE}/api/v1/items/${itemId}`, {
+  const res = await fetch(`${API_URL}/api/item/${itemId}`, {
     next: { revalidate: 60 }, 
   });
 
@@ -90,26 +90,19 @@ export const getItems = async (
   minPrice?: number, 
   maxPrice?: number
 ): Promise<PageResponse<ItemRes>> => {
-  
-  // 1. Tạo đối tượng URLSearchParams để quản lý query params
+
   const params = new URLSearchParams({
     page: page.toString(),
     size: size.toString(),
   });
 
-  // 2. Chỉ thêm minPrice và maxPrice vào URL nếu chúng có giá trị
   if (minPrice !== undefined && minPrice !== null) {
     params.append("minPrice", minPrice.toString());
   }
   if (maxPrice !== undefined && maxPrice !== null) {
     params.append("maxPrice", maxPrice.toString());
   }
-
-  // 3. Gọi fetch với query string đã được tạo tự động
   console.log('API URL :'+API_URL);
-  // const res = await fetch(`${API_FE}/api/v1/items?${params.toString()}`, {
-  //   next: { revalidate: 60 }, 
-  // });
   const res = await fetch(`${API_URL}/api/item/range-price?${params.toString()}`,{
     next:{ revalidate: 60 },
   })
