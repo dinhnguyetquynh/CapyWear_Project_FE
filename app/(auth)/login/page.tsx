@@ -27,37 +27,19 @@ export default function LoginPage(){
       return;
     }
 
-
-    // try{
-    //     let session = null;
-    //     for (let i = 0; i < 3; i++) {
-    //     session = await getSession();
-    //     if (session?.accessToken){
-    //         console.log("HAVE'T ACCESSTOKEN FROM SESSION");
-    //         break;
-    //     } 
-    
-    //     await new Promise(res => setTimeout(res, 300)); // đợi 300ms rồi thử lại
-    //     }
-
-    //     if (session?.roles?.includes("ADMIN")) {
-    //     router.push("/admin");
-    //     } else {
-    //     router.push("/");
-    //     }
-
-    //     router.refresh();
-    //     setLoading(false);
-    // }catch{
-    //     alert("ERROR LOGIN");
-    // }
     router.push("/"); 
     router.refresh();
     
   };
 
     return(
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 relative">
+            {loading && (
+            <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm transition-all">
+                <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="mt-4 text-gray-700 font-medium animate-pulse">Đang đăng nhập, vui lòng đợi...</p>
+            </div>
+            )}
             <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100">
             <h2 className="text-3xl font-extrabold text-center mb-8 text-gray-800">LOGIN</h2>
             <div className="space-y-6">
@@ -84,9 +66,10 @@ export default function LoginPage(){
             </div>
             <button 
                 onClick={handleLogin}
+                disabled={loading}
                 className="w-full bg-gray-950 text-white rounded-xl font-bold py-2 hover:bg-gray-800 active:scale-[0.98] transition-all"
             >
-                Đăng nhập
+                {loading?"Đang xử lý":"Đăng nhập"}
             </button>
                     <div className="relative flex py-2 items-center">
                         <div className="flex-grow border-t border-gray-300"></div>
