@@ -1,5 +1,4 @@
 import { getItemDetail } from "@/service/item.service";
-import ItemDetailContainer from "./item-detail-container";
 import ItemDetail from "./item-detail";
 interface PageProps{
   params : {id:string};

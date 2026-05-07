@@ -1,4 +1,4 @@
-'use server';
+
 import { CartDetailReq } from "@/types/cart";
 import { ApiRes } from "@/types/general";
 
