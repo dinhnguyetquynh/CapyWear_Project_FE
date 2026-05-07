@@ -77,10 +77,13 @@ export const authOptions: NextAuthOptions = {
           }),
         });
 
-        const user = await res.json();
-        console.log("Backend response:", res.status, user); 
-        if (res.ok && user) {
-          return user; 
+        const data = await res.json();
+
+        if (res.ok && data.accessToken) {
+          return{
+            id:credentials.email,
+            ...data,
+          }
         }
         return null;
       },
@@ -110,6 +113,9 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user, account }): Promise<JWT> {
       console.log("--- JWT Callback ---");
+      console.log("=== JWT Callback ===");
+      console.log("account:", account);
+      console.log("user:", user);
       if (account && user) {
         console.log("Dữ liệu từ Backend:", user);
         let backendResponse;
