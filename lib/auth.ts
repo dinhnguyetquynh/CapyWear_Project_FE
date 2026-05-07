@@ -157,7 +157,7 @@ export const authOptions: NextAuthOptions = {
     //get data from cookie for FE use
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;
-      // session.refreshToken = token.refreshToken as string;
+      session.refreshToken = token.refreshToken as string;
       session.roles = token.roles as string[];
       session.error = token.error;
       session.username=token.username;
