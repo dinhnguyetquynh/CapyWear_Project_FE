@@ -1,3 +1,4 @@
+import { CartDetailReq } from "@/types/cart"
 import { ApiRes } from "@/types/general"
 import { ItemRes, PageResponse } from "@/types/item"
 import { ProductListParams } from "@/types/params"
@@ -22,5 +23,36 @@ export const apiClient = {
       const res = await fetch(`${API_PREFIX}/${API_VERSION}/product-detail/${itemId}`);
       return res.json()
     }
-  }
+  },
+  cart:{
+    add: async(payload: CartDetailReq):Promise<ApiRes<any>>=>{
+      try {
+      const response = await fetch(`${API_PREFIX}/${API_VERSION}/cart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data :ApiRes<any>= await response.json();
+
+      if (!response.ok) {
+        return {
+          code: response.status,
+          message:data.message || "Lỗi khi xử lý giỏ hàng",
+          result: null,
+        }
+      }
+
+      return data;
+    } catch (error) {
+      return {
+        code: 500,
+        message: "Lỗi kết nối mạng",
+        result: null,
+      };
+    }
+  },
+    }
 }

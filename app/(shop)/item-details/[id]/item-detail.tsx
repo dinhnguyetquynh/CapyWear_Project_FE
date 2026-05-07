@@ -2,6 +2,7 @@
 
 import { CartDetailRes } from "@/components/cart/cart-detail";
 import { useCart } from "@/context/CartContext";
+import { apiClient } from "@/lib/api-client";
 import { addToCartAction } from "@/service/cart.service";
 import { ItemRes } from "@/types/item";
 import { useSession } from "next-auth/react";
@@ -42,8 +43,7 @@ export default  function ItemDetail({item}:Props){
 
     if (actionType === 'add') {
       console.log("Thêm vào giỏ hàng:", count, item.name);
-      console.log("ACCCESTOKEN:",accessToken);
-      const res = await addToCartAction({ itemId: item.id, quantity: count }, accessToken);
+      const res = await apiClient.cart.add({ itemId: item.id, quantity: count });
       if(res.code==200){
         await fetchCartCount();
         toast.success("Thành công",{description:res.message});

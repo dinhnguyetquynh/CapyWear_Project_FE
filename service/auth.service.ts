@@ -1,3 +1,6 @@
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+
 export interface AccountCreateReq{
     email:string;
     password: string;
@@ -56,3 +59,11 @@ export const verifyOtp = async(otp:string,userId:number):Promise<AuthResponse>=>
     throw error;
   }
 }
+
+export const getAuthSession = async () => {
+  return await getServerSession(authOptions);
+};
+export const getAccessToken = async () => {
+  const session = await getAuthSession();
+  return session?.accessToken; 
+};
