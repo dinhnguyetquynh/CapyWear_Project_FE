@@ -20,26 +20,42 @@ export default function LoginPage(){
     });
 
     console.log("signIn result:", result); 
-    
+
     if (result?.error) {
       alert("Đăng nhập thất bại: " + result.error);
       setLoading(false);
       return;
     }
 
-    const session = await getSession();
+    // const session = await getSession();
 
-    if (session) {
-      const roles = session.roles as string[]; 
-      console.log("roles:"+roles)
-      if (roles?.includes("ADMIN")) {
-        router.push("/admin");
-      } else {
-        router.push("/");
-      }
+    // if (session) {
+    //   const roles = session.roles as string[]; 
+    //   console.log("roles:"+roles)
+    //   if (roles?.includes("ADMIN")) {
+    //     router.push("/admin");
+    //   } else {
+    //     router.push("/");
+    //   }
       
-      router.refresh(); 
+    //   router.refresh(); 
+    // }
+    // setLoading(false);
+
+    let session = null;
+    for (let i = 0; i < 3; i++) {
+      session = await getSession();
+      if (session?.accessToken) break;
+      await new Promise(res => setTimeout(res, 300)); // đợi 300ms rồi thử lại
     }
+
+    if (session?.roles?.includes("ADMIN")) {
+      router.push("/admin");
+    } else {
+      router.push("/");
+    }
+
+    router.refresh();
     setLoading(false);
   };
 
