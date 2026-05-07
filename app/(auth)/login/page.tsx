@@ -42,21 +42,31 @@ export default function LoginPage(){
     // }
     // setLoading(false);
 
-    let session = null;
-    for (let i = 0; i < 3; i++) {
-      session = await getSession();
-      if (session?.accessToken) break;
-      await new Promise(res => setTimeout(res, 300)); // đợi 300ms rồi thử lại
+    try{
+        let session = null;
+        for (let i = 0; i < 3; i++) {
+        session = await getSession();
+        if (session?.accessToken){
+            console.log("HAVE'T ACCESSTOKEN FROM SESSION");
+            break;
+        } 
+    
+        await new Promise(res => setTimeout(res, 300)); // đợi 300ms rồi thử lại
+        }
+
+        if (session?.roles?.includes("ADMIN")) {
+        router.push("/admin");
+        } else {
+        router.push("/");
+        }
+
+        router.refresh();
+        setLoading(false);
+    }catch{
+        alert("ERROR LOGIN");
     }
 
-    if (session?.roles?.includes("ADMIN")) {
-      router.push("/admin");
-    } else {
-      router.push("/");
-    }
-
-    router.refresh();
-    setLoading(false);
+    
   };
 
     return(

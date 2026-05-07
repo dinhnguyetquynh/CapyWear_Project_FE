@@ -111,6 +111,7 @@ export const authOptions: NextAuthOptions = {
 })
   ],
   callbacks: {
+    //Save Cookie
     async jwt({ token, user, account }): Promise<JWT> {
       console.log("--- JWT Callback ---");
       console.log("=== JWT Callback ===");
@@ -153,6 +154,7 @@ export const authOptions: NextAuthOptions = {
       return refreshAccessToken(token);
     },
 
+    //get data from cookie for FE use
     async session({ session, token }) {
       // console.log("--- Session Callback ---");
       // console.log("Token hiện có:", token); 
