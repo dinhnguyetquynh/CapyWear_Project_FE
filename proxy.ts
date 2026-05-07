@@ -11,7 +11,7 @@ interface DecodedToken {
 }
 const userProtectedRoutes = ['/cart', '/profile'];
 
-export default async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = (await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET })) as JWT | null;
 
