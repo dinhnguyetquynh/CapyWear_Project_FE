@@ -78,6 +78,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         const user = await res.json();
+        console.log("Backend response:", res.status, user); 
         if (res.ok && user) {
           return user; 
         }

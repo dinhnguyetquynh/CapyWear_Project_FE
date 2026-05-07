@@ -11,7 +11,7 @@ export default function LoginPage(){
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const handleLogin = async () => {
+    const  handleLogin = async () => {
     setLoading(true);
     const result = await signIn("credentials", {
       email: email,
@@ -19,6 +19,8 @@ export default function LoginPage(){
       redirect: false,
     });
 
+    console.log("signIn result:", result); 
+    
     if (result?.error) {
       alert("Đăng nhập thất bại: " + result.error);
       setLoading(false);
