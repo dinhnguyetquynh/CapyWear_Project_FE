@@ -65,6 +65,6 @@ export const getAuthSession = async () => {
 };
 export const getAccessToken = async () => {
   const session = await getAuthSession();
-  console.log("TOKEN GET FROM SERVER:"+session?.accessToken);
+  console.log("TOKEN GET FROM SERVER:"+session?.accessToken); 
   return session?.accessToken; 
 };
