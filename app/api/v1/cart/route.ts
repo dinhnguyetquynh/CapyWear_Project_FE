@@ -5,6 +5,7 @@ const backendUrl = process.env.BACKEND_API_URL;
 
 export async function POST(request: NextRequest) {
    const token = getAccessToken();
+   console.log("TOKEN ADD TO CART:"+token);
 
   try {
     const body = await request.json();
