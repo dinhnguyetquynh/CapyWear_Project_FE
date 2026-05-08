@@ -1,5 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
+import { getToken } from "next-auth/jwt";
+import { NextRequest } from "next/server";
 
 export interface AccountCreateReq{
     email:string;
@@ -60,11 +62,20 @@ export const verifyOtp = async(otp:string,userId:number):Promise<AuthResponse>=>
   }
 }
 
-export const getAuthSession = async () => {
-  return await getServerSession(authOptions);
-};
-export const getAccessToken = async () => {
-  const session = await getAuthSession();
-  console.log("TOKEN GET FROM SERVER:"+session?.accessToken); 
-  return session?.accessToken; 
+// export const getAuthSession = async () => {
+//   return await getServerSession(authOptions);
+// };
+// export const getAccessToken = async () => {
+//   const session = await getAuthSession();
+//   console.log("TOKEN GET FROM SERVER:"+session?.accessToken); 
+//   return session?.accessToken; 
+// };
+
+export const getAccessToken = async (req: NextRequest) => {
+  const token = await getToken({ 
+    req, 
+    secret: process.env.NEXTAUTH_SECRET 
+  });
+  
+  return token?.accessToken as string | undefined;
 };

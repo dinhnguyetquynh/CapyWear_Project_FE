@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const backendUrl = process.env.BACKEND_API_URL;
 
 export async function POST(request: NextRequest) {
-   const token = await getAccessToken();
+   const token = await getAccessToken(request);
    console.log("TOKEN ADD TO CART:"+token);
 
   try {
