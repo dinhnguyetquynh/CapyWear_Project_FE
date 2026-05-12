@@ -7,6 +7,11 @@ const backendUrl = process.env.BACKEND_API_URL;
 //API ADD ITEM TO CART
 export async function POST(request: NextRequest) {
    const token = await getAccessToken(request);
+   console.log(">>> [API CART] Current Token:", token);
+
+   if (!token) {
+     console.warn(">>> [API CART] Warning: Token is undefined or null!");
+   }
   try {
     const body = await request.json();
     const response = await fetch(`${backendUrl}/api/cart/add-item`, {
