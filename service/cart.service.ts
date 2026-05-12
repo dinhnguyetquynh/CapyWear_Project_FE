@@ -1,7 +1,8 @@
 'use server'
 import { CartDetailReq } from "@/types/cart";
 import { ApiRes } from "@/types/general";
-import { getAccessToken } from "./auth.service";
+import { getAccessToken } from "./auth-server.service";
+
 
 export async function addToCartAction(req: CartDetailReq, token?: string): Promise<ApiRes<any>> {
   const backendUrl = process.env.BACKEND_API_URL;

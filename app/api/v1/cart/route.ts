@@ -1,4 +1,5 @@
-import { getAccessToken } from '@/service/auth.service';
+
+import { getAccessToken } from '@/service/auth-server.service';
 import { NextRequest, NextResponse } from 'next/server';
  
 const backendUrl = process.env.BACKEND_API_URL;
