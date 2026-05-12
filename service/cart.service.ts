@@ -39,6 +39,10 @@ export async function addToCartAction(req: CartDetailReq, token?: string): Promi
 
 export async function getCartList(): Promise<ApiRes<any>> {
   const token = await getAccessToken(); 
+  console.log("ACCESSTOKEN OF GET CART LIST:"+token);
+  if(!token){
+    console.log("ACCESSTOKEN OF GET CART LIST IS UNDEFINED");
+  }
   const backendUrl = process.env.BACKEND_API_URL;
   try{
     const response = await fetch(`${backendUrl}/api/cart/detail`,{
@@ -66,6 +70,7 @@ export async function getCartList(): Promise<ApiRes<any>> {
     };
   }
 }
+
 export async function deleteCartItemAction(cartDetailId: number, token?: string): Promise<ApiRes<any>> {
   const backendUrl = process.env.BACKEND_API_URL;
 
