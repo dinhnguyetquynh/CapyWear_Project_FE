@@ -36,7 +36,8 @@ export async function addToCartAction(req: CartDetailReq, token?: string): Promi
   }
 }
 
-export async function getCartList(token?:string): Promise<ApiRes<any>> {
+export async function getCartList(): Promise<ApiRes<any>> {
+  const token = await getAccessToken(); 
   const backendUrl = process.env.BACKEND_API_URL;
   try{
     const response = await fetch(`${backendUrl}/api/cart/detail`,{
