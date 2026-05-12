@@ -20,7 +20,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const fetchCartCount = async () => {
     if (!accessToken) return;
     try {
-      const res = await getCartList(accessToken);
+      const res = await getCartList();
       if (res && res.result) {
         // LƯU Ý: Tùy thuộc vào cấu trúc trả về của API, bạn điều chỉnh logic đếm. 
         // Ví dụ: nếu res.result là mảng các chi tiết giỏ hàng:
