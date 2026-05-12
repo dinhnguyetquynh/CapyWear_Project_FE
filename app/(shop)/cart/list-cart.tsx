@@ -1,48 +1,22 @@
 'use client'
 import CartDetail, { CartDetailRes } from "@/components/cart/cart-detail";
-import { authOptions } from "@/lib/auth";
-import { getCartList } from "@/service/cart.service";
-import { getServerSession } from "next-auth";
-import { getSession, useSession } from "next-auth/react";
 import { useFormatter, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
-export default function ListCartDetail(){
+import { useState } from "react";
+
+// interface ListCartDetailProps {
+//     initialItems: CartDetailRes[];
+//     accessToken: string;
+// }
+export default function ListCartDetail({ initialItems}: { initialItems: CartDetailRes[] }){
     const router = useRouter();
-
-
-    //KHONG DUNG SESSION DE GOI API
-    const session = useSession();
 
     const t = useTranslations('Cart');
     const format = useFormatter();
- 
-    console.log("Session lấy tại Server:", session);
-
-    const accessToken = session.data?.accessToken;
     
-    const[cartItems, setCartItems] = useState<CartDetailRes[]>([]);
+    const[cartItems, setCartItems] = useState<CartDetailRes[]>(initialItems);
     const[selectedIds,setSelectedIds] = useState<number[]>([]);
-    const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-    const fetchData = async () => {
-        if (accessToken) {
-            try {
-                const response = await getCartList(accessToken);
-                setCartItems(response.result || []);
-            } catch (error) {
-                console.error("Lỗi lấy giỏ hàng:", error);
-            } finally {
-                setLoading(false); 
-            }
-        } else if (session.status === "unauthenticated") {
-            setLoading(false); 
-        }
-    };
-
-    fetchData(); // <--- PHẢI GỌI HÀM NÀY THÌ NÓ MỚI CHẠY!
-}, [accessToken, session.status]); 
+    const [loading, setLoading] = useState(false);
 
     const toggleSelect = (id: number)=>{
         setSelectedIds(prev=>
@@ -82,7 +56,6 @@ useEffect(() => {
                         <CartDetail 
                             key={item.id} 
                             cd={item} 
-                            accessToken={accessToken}
                             isSelected={selectedIds.includes(item.id)}
                             onSelect={() => toggleSelect(item.id)}
                             onUpdateQuantity={(newQty) => {           
@@ -108,8 +81,6 @@ useEffect(() => {
                             </div>
                     </div>  
                 )}
-
-        
         </main>
     );
 

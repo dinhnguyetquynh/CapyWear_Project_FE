@@ -54,5 +54,27 @@ export const apiClient = {
       };
     }
   },
-    }
+  getDetail: async (): Promise<ApiRes<any>> => {
+      try {
+        const res = await fetch(`${API_PREFIX}/${API_VERSION}/cart`);
+        
+        const data: ApiRes<any> = await res.json();
+
+        if (!res.ok) {
+          return {
+            code: res.status,
+            message: data.message || "Không thể lấy thông tin giỏ hàng",
+            result: null,
+          };
+        }
+        return data;
+      } catch (error) {
+        return {
+          code: 500,
+          message: "Lỗi kết nối mạng",
+          result: null,
+        };
+      }
+    },
+  }
 }

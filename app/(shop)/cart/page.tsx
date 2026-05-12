@@ -1,7 +1,13 @@
+import { getAccessToken } from "@/service/auth.service";
 import ListCartDetail from "./list-cart";
+import { getCartList } from "@/service/cart.service";
 
 export const dynamic = "force-dynamic";
 
-export default function Page() {
-  return <ListCartDetail />;
+export default async function Page() {
+  const token = await getAccessToken(); 
+  const res = await getCartList(token);
+  const data = res.result;
+
+  return <ListCartDetail initialItems={data} />;
 }
