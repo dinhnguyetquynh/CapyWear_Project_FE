@@ -45,20 +45,20 @@ export default function CartDetail({ cd, isSelected, onSelect, onUpdateQuantity,
         setPrice(price+(cd.purchasePrice));
         onUpdateQuantity(newCount);
     };
-    // const deleteItem = async (cdId: number) => {
-    //     try {
-    //         const response = await deleteCartItemAction(cdId, accessToken);
-    //         if (response.code === 200) {
-    //             await fetchCartCount();
-    //             alert(t('deleteSuccess'));
-    //             onDeleteSuccess(cdId);
-    //         } else {
-    //             alert(response.message || t('errorOccurred'));
-    //         }
-    //     } catch (error) {
-    //         console.error("Lỗi khi xóa:", error);
-    //     }
-    // };
+    const deleteItem = async (cdId: number) => {
+        try {
+            const response = await deleteCartItemAction(cdId, accessToken);
+            if (response.code === 200) {
+                await fetchCartCount();
+                alert(t('deleteSuccess'));
+                onDeleteSuccess(cdId);
+            } else {
+                alert(response.message || t('errorOccurred'));
+            }
+        } catch (error) {
+            console.error("Lỗi khi xóa:", error);
+        }
+    };
     return(
         <div className="flex gap-6 items-start p-4 border-b border-t-gray-100 transition-colors ${isSelected?'bg-blue-50/50' : 'bg-white'}">
             <div className="flex items-center">
@@ -102,7 +102,7 @@ export default function CartDetail({ cd, isSelected, onSelect, onUpdateQuantity,
 
                <div className="mt-auto">
                     <button
-                        // onClick={()=>deleteItem(cd.id)} 
+                        onClick={()=>deleteItem(cd.id)} 
                         className="text-sm text-gray-500 hover:text-red-500 underline transition-colors"
                     >
                        {t('deleteItem')}
