@@ -14,6 +14,7 @@ export default function ProductManagement({ products: initialProducts }: { produ
 
   const handleAddProduct = async (data: any) => {
     try {
+      console.log("ACCESSTOKEN IS:"+accessToken)
       if(!accessToken) return;
       const result = await createItem(accessToken, data);
       alert("Thêm thành công!");
