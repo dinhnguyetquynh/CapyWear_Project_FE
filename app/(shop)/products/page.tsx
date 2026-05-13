@@ -25,10 +25,6 @@ export default async function HomePage({
 
   return (
     <div className="max-w-7xl min-h-screen p-8">
-      {/* 
-          Dùng key cho Suspense dựa trên params để Next.js biết 
-          cần hiển thị fallback khi URL thay đổi 
-      */}
       <Suspense key={JSON.stringify(params)} fallback={<div>Đang tải sản phẩm...</div>}>
         <ProductSection 
           items={data?.content || []} 
