@@ -36,7 +36,7 @@ export const updateItem = async(itemId:number,token:string,req:ItemReq):Promise<
 
 // api/item.ts
 export const createItem = async (token: string, data: ItemReq): Promise<ApiRes<ItemRes>> => {
-  const res = await fetch(`${API_URL}/api/item/`, {
+  const res = await fetch(`${API_URL}/api/item`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
