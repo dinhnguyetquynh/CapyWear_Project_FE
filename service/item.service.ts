@@ -85,7 +85,7 @@ export const findItem = async (token: string, q: string): Promise<SearchSuggesti
 }
 
 export const getItems = async (
-  page = 0, 
+  page:number ,
   size = 10, 
   minPrice?: number, 
   maxPrice?: number
@@ -106,7 +106,7 @@ export const getItems = async (
   const res = await fetch(`${API_URL}/api/item/range-price?${params.toString()}`,{
     next:{ revalidate: 60 },
   })
-
+ 
   if (!res.ok) {
     throw new Error("Không thể lấy danh sách sản phẩm");
   }
