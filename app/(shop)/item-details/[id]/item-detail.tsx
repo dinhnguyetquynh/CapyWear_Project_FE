@@ -44,6 +44,9 @@ export default  function ItemDetail({item}:Props){
     }
 
     if (actionType === 'add') {
+        if(item.inventoryQty<count){
+            alert("Số lượng trong kho chỉ còn:"+item.inventoryQty);
+        }
       console.log("Thêm vào giỏ hàng:", count, item.name);
       const res = await apiClient.cart.add({ itemId: item.id, quantity: count });
       if(res.code==200){
