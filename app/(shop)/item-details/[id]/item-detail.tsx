@@ -22,9 +22,9 @@ export default  function ItemDetail({item}:Props){
     const { fetchCartCount } = useCart();
 
     const handleIncrement =()=>{
-        if(count<=item.inventoryQty){
-            setCount(prev=>prev+1);
-        }
+       if (count < item.inventoryQty) {
+        setCount(prev => prev + 1);
+       }
     }
     const handleDecrement =()=>{
         if(count>1){
