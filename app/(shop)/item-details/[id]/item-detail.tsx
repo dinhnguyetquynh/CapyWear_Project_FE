@@ -57,6 +57,10 @@ export default  function ItemDetail({item}:Props){
         toast.error("Thất bại", { description: res.message });
       }
     } else {
+        if(item.inventoryQty<count){
+            toast.warning("Số lượng trong kho chỉ còn:"+item.inventoryQty+" cái");
+            return;
+        }
       console.log("Chuyển đến trang thanh toán với item:", item.name);
       const today = new Date().toISOString().split('T')[0];
       const props : CartDetailRes = {
