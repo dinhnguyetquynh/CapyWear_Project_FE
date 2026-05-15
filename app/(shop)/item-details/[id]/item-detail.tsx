@@ -101,9 +101,11 @@ export default  function ItemDetail({item}:Props){
                         -
                     </button>
                     <input 
-                        type="number" 
+                        type="number"
+                        min={1}
+                        max={item.inventoryQty}
                         value={count} 
-                        readOnly
+                        onChange={(e) => setCount(Number(e.target.value))}
                         className="w-12 text-center border-x border-gray-300 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                     />
                     <button 
